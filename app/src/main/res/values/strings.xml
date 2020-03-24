@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">youDiseNextLevel</string>
+    <string name="app_slogan">Your Desire, Find it here.</string>
+    <string name="app_login">Se Connecter</string>
+    <string name="login">Connexion</string>
+    <string name="register">Créer un compte</string>
+    <string name="app_register">Inscription</string>
+    <string name="input_username">Nom d\'Utilisateur</string>
+    <string name="input_fullname">Nom Complet</string>
+    <string name="input_email">Adresse Email</string>
+    <string name="input_phone">Numéro de Tél.</string>
+    <string name="input_password">Mot De Passe</string>
+    <string name="input_country">Pays de Résidence</string>
+    <string name="remember_me_checkbox">Se souvenir de moi</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="i_admin">Je suis un Admin ?</string>
+    <string name="not_admin">Je suis pas un Admin ?</string>
+    <string name="you_not_admin">Vous n\'êtes pas Admin ! Connectez-vous en tant que Utilisateur svp.</string>
+    <string name="you_not_user">Vous n\'êtes pas Utilisateur ! Connectez-vous en tant que Admin svp.</string>
+    <string name="registrationAdmin_msg">Félicitaions , votre compte Admin a été créé avec succés !</string>
+    <string name="registrationUser_msg">Félicitaions , votre compte User a été créé avec succés !</string>
+    <string name="empty_name">Entrez votre nom svp.</string>
+    <string name="empty_email">Entrez votre adresse Email svp.</string>
+    <string name="empty_phone">Entrez votre numéro de télephone svp.</string>
+    <string name="empty_password">Entrez votre mot de passe svp.</string>
+    <string name="empty_country">Entrez votre pays svp.</string>
+    <string name="not_enough_password">Le mot de passe doit comprendre minimum 6 caractères</string>
+    <string name="not_enough_phone">Le numéro de Tél. doit comprendre minimum 10 caractères</string>
+    <string name="invalid_phone">Entrez un numéro de Tél. valide svp.</string>
+    <string name="invalid_mail">Entrez une Adresse Email valide svp.</string>
+    <string name="creation_account">Creation du Compte</string>
+    <string name="hold_on_msg">Veuillez patientez un petit instant...</string>
+    <string name="login_account">En cours de connexion</string>
+    <string name="already_logged_in">Déjà Connecté...</string>
+    <string name="logged_Admin_msg">Bienvenue cher Admin, vous vous êtes connecté avec succés !</string>
+    <string name="logged_User_msg">Bienvenue cher Utilisateur, vous vous êtes connecté avec succés !</string>
+    <string name="already_logged_msg">Vous êtes déjà connecté !</string>
+    <string name="already_registered_msg">Ce compte existe déja !</string>
+    <string name="error_register_msg">Une erreur est survenue lors de l\'inscription !</string>
+    <string name="wrong_logged_msg">Email ou mot de passe incorrect !</string>
+
+</resources>

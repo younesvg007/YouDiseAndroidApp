@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "869699081934",
+    "firebase_url": "https://youdisenext.firebaseio.com",
+    "project_id": "youdisenext",
+    "storage_bucket": "youdisenext.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869699081934:android:7e148c5e08565cd9a0629f",
+        "android_client_info": {
+          "package_name": "com.example.youdisenextlevel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869699081934-4r831alf7iqrc33u9ir3gp7134g9s81u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.youdisenextlevel",
+            "certificate_hash": "926df50dc7921721a94f40f0056c3069412257cf"
+          }
+        },
+        {
+          "client_id": "869699081934-6lcudvf4ht81f5tn2bk3m6ghkf4kee1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjfGlOdlujWmR2OAOWW4yMDx7tg7wAi1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869699081934-6lcudvf4ht81f5tn2bk3m6ghkf4kee1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

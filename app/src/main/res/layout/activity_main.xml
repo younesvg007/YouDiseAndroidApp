@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcome"
+    tools:context=".Controller.MainActivity">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="330dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo_youdise"
+        />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="185dp"
+        android:text="@string/app_slogan"
+        android:textAlignment="center"
+        android:textColor="@color/colorSlogan"
+        android:textSize="22sp"
+        android:textStyle="bold|italic"
+        />
+
+    <Button
+        android:id="@+id/login_main_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/buttons"
+        android:padding="12dp"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:text="@string/app_login"
+        android:textColor="@color/colorWhite"
+        />
+
+    <Button
+        android:id="@+id/register_main_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/login_main_btn"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/buttons"
+        android:padding="12dp"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:text="@string/app_register"
+        android:textColor="@color/colorWhite"
+        />
+
+</RelativeLayout>
