@@ -24,6 +24,10 @@
     <string name="empty_phone">Entrez votre numéro de télephone svp.</string>
     <string name="empty_password">Entrez votre mot de passe svp.</string>
     <string name="empty_country">Entrez votre pays svp.</string>
+    <string name="mandatory_image_uri">Une image de votre produit est obligatoire.</string>
+    <string name="empty_name_product">Entrez le nom du Produit svp.</string>
+    <string name="empty_description_product">Ecrivez une description du Produit svp.</string>
+    <string name="empty_price_product">Entrez le prix du Produit svp.</string>
     <string name="not_enough_password">Le mot de passe doit comprendre minimum 6 caractères</string>
     <string name="not_enough_phone">Le numéro de Tél. doit comprendre minimum 10 caractères</string>
     <string name="invalid_phone">Entrez un numéro de Tél. valide svp.</string>
@@ -38,5 +42,9 @@
     <string name="already_registered_msg">Ce compte existe déja !</string>
     <string name="error_register_msg">Une erreur est survenue lors de l\'inscription !</string>
     <string name="wrong_logged_msg">Email ou mot de passe incorrect !</string>
+    <string name="add_new_product">Ajouter Produit</string>
+    <string name="product_name">Nom du Produit...</string>
+    <string name="product_describe">Description du Produit...</string>
+    <string name="product_price">Prix du Produit...</string>
 
 </resources>

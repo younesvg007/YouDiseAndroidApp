@@ -1,25 +1,39 @@
 package com.example.youdisenextlevel.Model;
 
-public class Admins extends Person{
+import com.example.youdisenextlevel.Application.Myapplication;
 
-    private String idAdmin;
+public class Admins{
+
+    //private String idAdmin;
+    private String fullname, email, password;
 
     public Admins() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Admins(String idAdmin, String username, String email, String password) {
-        super(username, email, password);
-        this.idAdmin = idAdmin;
+    public Admins(String fullname, String email, String password) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
     }
 
-    public String getIdAdmin() {
-        return idAdmin;
+    public Admins(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setIdAdmin(String idAdmin) {
-        this.idAdmin = idAdmin;
+    public boolean insertAdmin(){
+        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertAdmin(fullname, email, password);
+        return isAdded;
     }
 
+    public boolean checkMailAdmin(){
+        boolean isExist = Myapplication.getYdDatabaseAdapter().checkMailAdmin(email);
+        return isExist;
+    }
 
+    public boolean loginAdmin(){
+        boolean checkAdmin = Myapplication.getYdDatabaseAdapter().checkAdmin(email, password);
+        return checkAdmin;
+    }
 }

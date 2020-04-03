@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.youdisenextlevel.Model.Database.DatabaseHelper;
+//import com.example.youdisenextlevel.Model.Database.DatabaseHelper;
+import com.example.youdisenextlevel.Application.Myapplication;
+import com.example.youdisenextlevel.Model.Admins;
+import com.example.youdisenextlevel.Model.Users;
 import com.example.youdisenextlevel.R;
 
 public class loginActivity extends AppCompatActivity {
@@ -26,7 +29,7 @@ public class loginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private CheckBox rememberChck;
 
-    private DatabaseHelper db;
+    //private DatabaseHelper db;
     private String tableName = "users";
 
     @Override
@@ -49,7 +52,7 @@ public class loginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginUser();
+                authentification();
             }
         });
 
@@ -103,7 +106,7 @@ public class loginActivity extends AppCompatActivity {
     }
 
     // Phase de Connexion
-    private void loginUser() {
+    private void authentification(){
         final String email = inputEmail.getText().toString().trim();
         final String password = inputPassword.getText().toString().trim();
 
@@ -127,12 +130,17 @@ public class loginActivity extends AppCompatActivity {
         }
     }
 
-    private void signInAdmin(String mail, String pwd) {
-        boolean chckAdminExist = db.checkAdmin(mail, pwd);
-        if (chckAdminExist == true){
-            sendUserToHome();
+    private void signInUser(String mail, String pwd){
+
+        Users user = new Users(mail, pwd);
+
+        boolean checkUser = user.loginUser();
+        System.out.println(checkUser);
+        //boolean chckUserExist = true;//db.checkUser(mail, pwd);
+        if (checkUser){
             loadingBar.dismiss();
-            Toast.makeText(loginActivity.this, getString(R.string.logged_Admin_msg), Toast.LENGTH_SHORT).show();
+            sendUserToHome();
+            Toast.makeText(loginActivity.this, getString(R.string.logged_User_msg), Toast.LENGTH_SHORT).show();
         }
         else{
             loadingBar.dismiss();
@@ -140,13 +148,15 @@ public class loginActivity extends AppCompatActivity {
         }
     }
 
-    private void signInUser(String mail, String pwd) {
+    private void signInAdmin(String mail, String pwd) {
 
-        boolean chckUserExist = db.checkUser(mail, pwd);
-        if (chckUserExist == true){
-            sendUserToHome();
+        Admins admin = new Admins(mail, pwd);
+        boolean checkAdmin = admin.loginAdmin(); //= db.checkAdmin(mail, pwd);
+        if (checkAdmin){
+            //sendUserToHome();
             loadingBar.dismiss();
-            Toast.makeText(loginActivity.this, getString(R.string.logged_User_msg), Toast.LENGTH_SHORT).show();
+            sendAdminToAdminCategory();
+            Toast.makeText(loginActivity.this, getString(R.string.logged_Admin_msg), Toast.LENGTH_SHORT).show();
         }
         else{
             loadingBar.dismiss();
@@ -169,15 +179,15 @@ public class loginActivity extends AppCompatActivity {
         startActivity(homeIntent);
     }
 
-    //direction vers Main Activity
-    private void sendUserToMain() {
-        Intent mainIntent = new Intent(loginActivity.this, MainActivity.class);
+    //direction vers AdminCategory Activity
+    private void sendAdminToAdminCategory() {
+        Intent mainIntent = new Intent(loginActivity.this, CategoryAdminActivity.class);
         startActivity(mainIntent);
     }
 
     //Initialiastion des champs
     private void initiatizeField() {
-        db = new DatabaseHelper(this);
+        //db = new DatabaseHelper(this);
 
         loginBtn = (Button) findViewById(R.id.login_btn);
         inputEmail = (EditText) findViewById(R.id.login_email_input);
@@ -186,5 +196,8 @@ public class loginActivity extends AppCompatActivity {
         rememberChck = (CheckBox) findViewById(R.id.remember_me_checkbox);
         adminLink = (TextView) findViewById(R.id.admin_login_link);
         notAdminLink = (TextView) findViewById(R.id.not_admin_login_link);
+
+        inputEmail.setText("soolking@mail.com");
+        inputPassword.setText("banana");
     }
 }

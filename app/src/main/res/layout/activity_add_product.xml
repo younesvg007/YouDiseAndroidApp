@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.AddProductActivity">
+
+    <ImageView
+        android:id="@+id/select_product_image2"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/select_product_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        />
+
+    <EditText
+        android:id="@+id/product_name2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_product_image2"
+        android:inputType="text"
+        android:padding="20dp"
+        android:hint="@string/product_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:textStyle="italic"
+        android:background="@drawable/input_design"
+        />
+
+    <EditText
+        android:id="@+id/product_description2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_name2"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="8dp"
+        android:padding="20dp"
+        android:hint="@string/product_describe"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:textStyle="italic"
+        android:background="@drawable/input_design"
+        />
+
+    <EditText
+        android:id="@+id/product_price2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_description2"
+        android:inputType="number"
+        android:layout_marginTop="8dp"
+        android:padding="20dp"
+        android:hint="@string/product_price"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:textStyle="italic"
+        android:background="@drawable/input_design"
+        />
+
+    <Button
+        android:id="@+id/add_new_product_btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_price2"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:text="@string/add_new_product"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/buttons"
+        />
+</RelativeLayout>

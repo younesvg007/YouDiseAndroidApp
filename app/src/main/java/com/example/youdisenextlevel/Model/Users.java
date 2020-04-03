@@ -1,27 +1,33 @@
 package com.example.youdisenextlevel.Model;
 
-public class Users extends Person{
+import com.example.youdisenextlevel.Application.Myapplication;
 
-    private String idUser, phoneNum, country;
+public class Users{
+
+    private String idUser;
+    private String username, email, password,  phoneNum, country;
 
     public Users() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Users(String idUser, String username, String email, String phoneNum, String password,  String country) {
-        super(username, email, password);
-        this.idUser = idUser;
+    public Users(String username, String email, String password,  String phoneNum, String country) {
+        //this.idUser = idUser;
+        this.username = username;
+        this.email = email;
+        this.password = password;
         this.phoneNum = phoneNum;
         this.country = country;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public Users(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
+    /*public String getIdUser() {
+        return idUser;
+    }*/
 
     public String getCountry() {
         return country;
@@ -34,4 +40,19 @@ public class Users extends Person{
     public String getPhoneNum() { return phoneNum; }
 
     public void setPhoneNum(String phoneNum) { this.phoneNum = phoneNum; }
+
+    public boolean insertUser(){
+        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertUser(username, email, password,  phoneNum, country);
+        return isAdded;
+    }
+
+    public boolean loginUser(){
+        boolean checkUser = Myapplication.getYdDatabaseAdapter().checkUser(email, password);
+        return checkUser;
+    }
+
+    public boolean checkMailUser(){
+        boolean isExist = Myapplication.getYdDatabaseAdapter().checkMailUser(email);
+        return isExist;
+    }
 }

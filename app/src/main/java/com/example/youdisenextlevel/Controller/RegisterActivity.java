@@ -12,23 +12,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.youdisenextlevel.Model.Database.DatabaseHelper;
+//import com.example.youdisenextlevel.Model.Database.DatabaseHelper;
+import com.example.youdisenextlevel.Model.Admins;
+import com.example.youdisenextlevel.Model.Users;
 import com.example.youdisenextlevel.R;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private DatabaseHelper db;
+    //private DatabaseHelper db;
 
     private Button createAccountBtn;
     private EditText inputName, inputEmail, inputPhone, inputPassword, inputCountry;
     private TextView adminLink, notAdminLink;
     private ProgressDialog loadingBar;
 
-
-
     private String tableName = "users";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initializeFields() {
 
-        db = new DatabaseHelper(this);
+        //db = new DatabaseHelper(this);
         createAccountBtn = (Button) findViewById(R.id.register_btn);
         inputName = (EditText) findViewById(R.id.register_username_input);
         inputEmail = (EditText) findViewById(R.id.register_email_input);
@@ -104,6 +103,12 @@ public class RegisterActivity extends AppCompatActivity {
         notAdminLink = (TextView) findViewById(R.id.not_admin_register_link);
 
         loadingBar = new ProgressDialog(this);
+
+        inputName.setText("soolking");
+        inputEmail.setText("soolking@mail.com");
+        inputPassword.setText("banana");
+        inputPhone.setText("0123456100");
+        inputCountry.setText("Belgique");
 
     }
 
@@ -138,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
             inputPhone.setError(getString(R.string.empty_phone));
             inputPhone.requestFocus();
         }
-        else if (phone.length() < 10) {
+        else if (phone.length() != 10) {
             inputPhone.setError(getString(R.string.not_enough_phone));
             inputPhone.requestFocus();
         }
@@ -148,18 +153,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else{
             loadingBarRegister();
-            registerUser(name, email, phone, password, country);
+            registerUser(name, email, password, phone, country);
         }
     }
 
-    private void registerUser(String name, String mail, String phone, String password, String coutry) {
+    private void registerUser(String name, String email, String password, String phone, String country) {
 
-        boolean checkEmailUser = db.checkMailUser(mail);
-        if (checkEmailUser == false){
-            boolean insertUser = db.addUser(name, mail, phone, password, coutry);
+        //String passwordCrypte = CryptePassword.encrypt(passwordEditText.getText().toString());
+        Users user = new Users(name, email, password, phone, country);
+
+        boolean isExist = user.checkMailUser();
+        if (!isExist){
+            boolean isInsertUser = user.insertUser();
 
             //si insert a fonctionné
-            if (insertUser == true){
+            if (isInsertUser){
                 loadingBar.dismiss();
                 Toast.makeText(RegisterActivity.this, getString(R.string.registrationUser_msg), Toast.LENGTH_SHORT).show();
                 sendUserToLogin();
@@ -212,12 +220,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerAdmin(String name, String mail, String pwd) {
 
-        boolean checkEmailAdmin = db.checkMailAdmin(mail);
-        if (checkEmailAdmin == false){
-            boolean insertAdmin = db.addAdmin(name, mail, pwd);
+        //String passwordCrypte = CryptePassword.encrypt(passwordEditText.getText().toString());
+        Admins admin = new Admins(name, mail, pwd);
+
+        boolean isExist = admin.checkMailAdmin();
+        if (!isExist){
+            boolean isInsertAdmin = admin.insertAdmin();
 
             //si insert a fonctionné
-            if (insertAdmin == true){
+            if (isInsertAdmin){
                 loadingBar.dismiss();
                 Toast.makeText(RegisterActivity.this, getString(R.string.registrationAdmin_msg), Toast.LENGTH_SHORT).show();
                 sendUserToLogin();
