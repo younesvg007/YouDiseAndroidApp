@@ -85,7 +85,6 @@ public class AddProductActivity extends AppCompatActivity {
             inputProductPrice.requestFocus();
         }
         else{
-            //Toast.makeText(this, "Ajouté! ", Toast.LENGTH_SHORT).show();
             storeProduct();
         }
     }
@@ -107,10 +106,10 @@ public class AddProductActivity extends AppCompatActivity {
                     imageUri,
                     imageUrl,
                     taskSnapshot -> {System.out.println("image insert ok"); });
-            Toast.makeText(this, "cest bon", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.product_added), Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(this, "Mauvais", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_addproduct), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,6 +120,9 @@ public class AddProductActivity extends AppCompatActivity {
         inputProductImage = (ImageView) findViewById(R.id.select_product_image2);
         addNewProductButton = (Button) findViewById(R.id.add_new_product_btn2);
 
+        inputProductName.setText("Yamaha");
+        inputProductDescription.setText("joli");
+        inputProductPrice.setText("10000");
     }
 
     private void openGallery() {

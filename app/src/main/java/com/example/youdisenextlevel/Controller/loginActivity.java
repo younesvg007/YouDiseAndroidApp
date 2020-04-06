@@ -40,14 +40,7 @@ public class loginActivity extends AppCompatActivity {
         initiatizeField();
 
         //mini-memoire
-        SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = prefs.getString("remember", "");
-        if (checkbox.equals("true")){
-            sendUserToHome();
-        }
-        else if (checkbox.equals("false")){
-            Toast.makeText(this, "Connectez vous", Toast.LENGTH_SHORT).show();
-        }
+        initRemember();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,28 +74,36 @@ public class loginActivity extends AppCompatActivity {
             }
         });
 
-        rememberChck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        rememberChck.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (rememberChck.isChecked()){
-                    SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(loginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                    Toast.makeText(loginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-                }
+            /*if (rememberChck.isChecked()){
+                SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("remember", "true");
+                editor.apply();
+                Toast.makeText(loginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
             }
+            else{
+                SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+                Toast.makeText(loginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+            }*/
         });
 
 
+    }
+
+    private void initRemember() {
+        SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = prefs.getString("remember", "");
+        if (checkbox.equals("true")){
+            sendUserToHome();
+        }
+        else if (checkbox.equals("false")){
+            Toast.makeText(this, "Connectez vous", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Phase de Connexion
@@ -139,7 +140,10 @@ public class loginActivity extends AppCompatActivity {
         //boolean chckUserExist = true;//db.checkUser(mail, pwd);
         if (checkUser){
             loadingBar.dismiss();
-            sendUserToHome();
+            //sendUserToHome();
+            Intent homeIntent = new Intent(loginActivity.this, HomeActivity.class);
+            homeIntent.putExtra("email", user.getEmail());
+            startActivity(homeIntent);
             Toast.makeText(loginActivity.this, getString(R.string.logged_User_msg), Toast.LENGTH_SHORT).show();
         }
         else{

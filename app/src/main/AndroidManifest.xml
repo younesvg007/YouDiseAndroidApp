@@ -13,9 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.AddProductActivity"></activity>
+        <activity android:name=".Controller.ProfileActivity"></activity>
+        <activity android:name=".Controller.AddProductActivity" />
         <activity android:name=".Controller.CategoryAdminActivity" />
-        <activity android:name=".Controller.HomeActivity" />
+        <activity
+            android:name=".Controller.HomeActivity"
+            android:theme="@style/AppThemeBar"
+            android:label="Home"
+            />
         <activity android:name=".Controller.RegisterActivity" />
         <activity android:name=".Controller.loginActivity" />
         <activity android:name=".Controller.MainActivity">

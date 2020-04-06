@@ -29,6 +29,14 @@ public class Users{
         return idUser;
     }*/
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getCountry() {
         return country;
     }
