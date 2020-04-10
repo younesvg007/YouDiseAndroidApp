@@ -20,8 +20,6 @@ import com.example.youdisenextlevel.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    //private DatabaseHelper db;
-
     private Button createAccountBtn;
     private EditText inputName, inputEmail, inputPhone, inputPassword, inputCountry;
     private TextView adminLink, notAdminLink;
@@ -91,8 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initializeFields() {
-
-        //db = new DatabaseHelper(this);
         createAccountBtn = (Button) findViewById(R.id.register_btn);
         inputName = (EditText) findViewById(R.id.register_username_input);
         inputEmail = (EditText) findViewById(R.id.register_email_input);
@@ -101,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
         inputCountry = (EditText) findViewById(R.id.register_country_input);
         adminLink = (TextView) findViewById(R.id.admin_register_link);
         notAdminLink = (TextView) findViewById(R.id.not_admin_register_link);
-
         loadingBar = new ProgressDialog(this);
 
         inputName.setText("soolking");
@@ -109,7 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
         inputPassword.setText("banana");
         inputPhone.setText("0123456100");
         inputCountry.setText("Belgique");
-
     }
 
     private void createUserAccount() {
@@ -158,7 +152,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String name, String email, String password, String phone, String country) {
-
         //String passwordCrypte = CryptePassword.encrypt(passwordEditText.getText().toString());
         Users user = new Users(name, email, password, phone, country);
 
@@ -175,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
             else{
                 loadingBar.dismiss();
                 Toast.makeText(RegisterActivity.this, getString(R.string.error_register_msg), Toast.LENGTH_SHORT).show();
-                sendUserToMain();
+                finish();
             }
         }
         else{
@@ -207,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
             inputPassword.setError(getString(R.string.empty_password));
             inputPassword.requestFocus();
         }
-        else if (password.length() < 3){
+        else if (password.length() < 6){
             inputPassword.setError(getString(R.string.not_enough_password));
             inputPassword.requestFocus();
         }
@@ -219,7 +212,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerAdmin(String name, String mail, String pwd) {
-
         //String passwordCrypte = CryptePassword.encrypt(passwordEditText.getText().toString());
         Admins admin = new Admins(name, mail, pwd);
 
@@ -236,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
             else{
                 loadingBar.dismiss();
                 Toast.makeText(RegisterActivity.this, getString(R.string.error_register_msg), Toast.LENGTH_SHORT).show();
-                sendUserToMain();
+                finish();
             }
         }
         else{
@@ -244,19 +236,12 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, getString(R.string.already_registered_msg), Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
+    
     //direction vers login Activity
     private void sendUserToLogin() {
         Intent loginIntent = new Intent(RegisterActivity.this, loginActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //permet de refresh lactivity
         startActivity(loginIntent);
-    }
-
-    private void sendUserToMain() {
-        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-        startActivity(mainIntent);
     }
 
     private void loadingBarRegister() {

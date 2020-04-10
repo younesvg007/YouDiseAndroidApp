@@ -1,5 +1,6 @@
 package com.example.youdisenextlevel.ViewHolder;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.youdisenextlevel.Model.Database.ImageStorage;
+import com.example.youdisenextlevel.Controller.HomeActivity;
+import com.example.youdisenextlevel.Controller.MainActivity;
+import com.example.youdisenextlevel.Model.Database.ImageManage;
 import com.example.youdisenextlevel.Model.Products;
 import com.example.youdisenextlevel.R;
 
@@ -26,14 +29,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
             implements View
             .OnClickListener {
 
-        TextView namePro, descPro, pricePro;
+        TextView namePro, categoryPro, descPro, pricePro, datePro;
         ImageView imagePro;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             namePro = (TextView) itemView.findViewById(R.id.name_product_item);
+            categoryPro = (TextView) itemView.findViewById(R.id.category_product_item);
             descPro = (TextView) itemView.findViewById(R.id.description_product_item);
             pricePro = (TextView) itemView.findViewById(R.id.price_product_item);
+            datePro = (TextView) itemView.findViewById(R.id.datetime_product_item);
             imagePro = (ImageView) itemView.findViewById(R.id.image_product_item);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -43,12 +48,15 @@ public class MyRecyclerViewAdapter extends RecyclerView
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
+
     public void setOnItemClickListener(MyClickListener myClickListener) {
         this.myClickListener = myClickListener;
     }
+
     public MyRecyclerViewAdapter(ArrayList<Products> myDataset) {
         mDataset = myDataset;
     }
+
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
@@ -60,18 +68,28 @@ public class MyRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.namePro.setText(mDataset.get(position).getName());
+
+        String category = "(" + mDataset.get(position).getCategory() + ").";
+        holder.categoryPro.setText(category);
+
         holder.descPro.setText(mDataset.get(position).getDescription());
 
-        String price = mDataset.get(position).getPrice() + "  € ";
+        String price = mDataset.get(position).getPrice() + " € ";
         holder.pricePro.setText(price);
 
+        String dateTime = "Publié le " + mDataset.get(position).getDateTime();
+        holder.datePro.setText(dateTime);
+
         String image = mDataset.get(position).getImagePath();
-        ImageStorage.getImage(image, holder.imagePro);
+        ImageManage.getImage(image, holder.imagePro);
+
     }
+
     public void addItem(Products produit, int index) {
         mDataset.add(index, produit);
         notifyItemInserted(index);
     }
+
     public void deleteItem(int index) {
         mDataset.remove(index);
         notifyItemRemoved(index);

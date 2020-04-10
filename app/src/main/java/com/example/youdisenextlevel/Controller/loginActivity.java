@@ -29,7 +29,6 @@ public class loginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private CheckBox rememberChck;
 
-    //private DatabaseHelper db;
     private String tableName = "users";
 
     @Override
@@ -53,7 +52,7 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                loginBtn.setText("Login Admin");
+                loginBtn.setText("Connexion Admin");
                 adminLink.setVisibility(View.INVISIBLE);
                 notAdminLink.setVisibility(View.VISIBLE);
 
@@ -136,14 +135,13 @@ public class loginActivity extends AppCompatActivity {
         Users user = new Users(mail, pwd);
 
         boolean checkUser = user.loginUser();
-        System.out.println(checkUser);
-        //boolean chckUserExist = true;//db.checkUser(mail, pwd);
         if (checkUser){
             loadingBar.dismiss();
-            //sendUserToHome();
+
             Intent homeIntent = new Intent(loginActivity.this, HomeActivity.class);
             homeIntent.putExtra("email", user.getEmail());
             startActivity(homeIntent);
+
             Toast.makeText(loginActivity.this, getString(R.string.logged_User_msg), Toast.LENGTH_SHORT).show();
         }
         else{
@@ -160,6 +158,7 @@ public class loginActivity extends AppCompatActivity {
             //sendUserToHome();
             loadingBar.dismiss();
             sendAdminToAdminCategory();
+
             Toast.makeText(loginActivity.this, getString(R.string.logged_Admin_msg), Toast.LENGTH_SHORT).show();
         }
         else{

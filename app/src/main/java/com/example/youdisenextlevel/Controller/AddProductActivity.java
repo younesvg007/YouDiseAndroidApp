@@ -1,6 +1,5 @@
 package com.example.youdisenextlevel.Controller;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,16 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.youdisenextlevel.Model.Database.ImageStorage;
+import com.example.youdisenextlevel.Model.Database.ImageManage;
 import com.example.youdisenextlevel.Model.Products;
 import com.example.youdisenextlevel.R;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -96,17 +88,18 @@ public class AddProductActivity extends AppCompatActivity {
         saveCurrentDate =  currentDate.format(calendar.getTime());
 
         SimpleDateFormat imageDate = new SimpleDateFormat("yyyyMMddHHmmss");
-        imageUrl =  imageDate.format(calendar.getTime())+ "." + ImageStorage.extention(getContentResolver(),imageUri);
+        imageUrl =  imageDate.format(calendar.getTime())+ "." + ImageManage.extention(getContentResolver(),imageUri);
 
         int price = Integer.parseInt(priceProduct);
         Products products = new Products(nameProduct, categoryName, descriptionProduct, price, saveCurrentDate, imageUrl);
         boolean isAdded = products.insertProduct();
         if (isAdded){
-            ImageStorage.addImage(
+            ImageManage.addImage(
                     imageUri,
                     imageUrl,
                     taskSnapshot -> {System.out.println("image insert ok"); });
             Toast.makeText(this, getString(R.string.product_added), Toast.LENGTH_SHORT).show();
+            finish();
         }
         else{
             Toast.makeText(this, getString(R.string.error_addproduct), Toast.LENGTH_SHORT).show();

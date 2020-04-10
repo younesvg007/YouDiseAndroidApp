@@ -7,4 +7,6 @@
     <color name="colorButton">#25AA2C</color>
     <color name="colorInput">#16ED22</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlue">#1463A1</color>
 </resources>

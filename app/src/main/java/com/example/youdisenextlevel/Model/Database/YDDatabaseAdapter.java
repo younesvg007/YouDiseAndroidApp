@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.youdisenextlevel.Application.Myapplication;
+import com.example.youdisenextlevel.Model.Users;
 
 public class YDDatabaseAdapter {
     private SQLiteDatabase sqLiteDB;
@@ -77,6 +78,19 @@ public class YDDatabaseAdapter {
         else{
             return false;
         }
+    }
+
+    public Cursor getDataOfUser(String email){
+        Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.USERS_TABLE_NAME+" WHERE "+YouDise.USERS_COL_EMAIL + "= ?", new String[]{email});
+        return cursor;
+    }
+
+    public boolean updateUser(String name, String newEmail, String password, String oldEmail) {
+
+        String sql = "UPDATE " + YouDise.USERS_TABLE_NAME + " SET " + YouDise.USERS_COL_USERNAME + " = ?, " + YouDise.USERS_COL_EMAIL + " = ?, " + YouDise.USERS_COL_PASSWORD + " = ? WHERE "+ YouDise.USERS_COL_EMAIL+" = ?";
+        sqLiteDB.execSQL(sql, new String[]{name, newEmail, password, oldEmail});
+
+        return true ;
     }
 
     //inserting ADMIN in database
@@ -153,5 +167,57 @@ public class YDDatabaseAdapter {
     public Cursor getAllProduct(){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+YouDise.PRODUCTS_TABLE_NAME, null);
         return cursor;
+    }
+
+    public Cursor getDataOfProduct(String id){
+        Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.PRODUCTS_TABLE_NAME+" WHERE "+YouDise.PRODUCTS_COL_ID + "= ?", new String[]{id});
+        return cursor;
+    }
+
+    //inserting PRODUCT in database
+    public boolean insertCart(String name, String imageUrl, int quantity, int price, int idProduct, int idUser) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(YouDise.CART_COL_NAME, name);
+        contentValues.put(YouDise.CART_COL_IMAGE, imageUrl);
+        contentValues.put(YouDise.CART_COL_QUANTITY, quantity);
+        contentValues.put(YouDise.CART_COL_PRICE, price);
+        contentValues.put(YouDise.CART_COL_IDPRODUCT, idProduct);
+        contentValues.put(YouDise.CART_COL_IDUSER, idUser);
+
+        long resultId = sqLiteDB.insert(YouDise.CART_TABLE_NAME, null, contentValues);
+        return resultId != -1;
+    }
+
+    public boolean checkProductUser(String idProduct, String idUser){
+        String[] columns = {
+                YouDise.CART_COL_ID
+        };
+        //sqLiteDB = this.getReadableDatabase();
+        // selection criteria
+        String selection = YouDise.CART_COL_IDPRODUCT + " = ?" + " AND " + YouDise.CART_COL_IDUSER + " = ?";
+
+        // selection arguments
+        String[] selectionArgs = {idProduct, idUser};
+
+        // query user table with conditions
+
+        Cursor cursor = sqLiteDB.query(YouDise.CART_TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+
+        int cursorCount = cursor.getCount();
+
+        //cursor.close();
+        //sqLiteDB.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

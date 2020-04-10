@@ -1,9 +1,11 @@
 package com.example.youdisenextlevel.Model;
 
+import android.database.Cursor;
+
 import com.example.youdisenextlevel.Application.Myapplication;
 
 public class Products {
-    private String name, category, description, dateTime, imagePath;
+    private String idProduct, name, category, description, dateTime, imagePath;
     private int price ,img;
 
     public Products() {
@@ -26,9 +28,13 @@ public class Products {
         this.imagePath = imagePath;
     }
 
-    public boolean insertProduct(){
-        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertProduct(name, category, description, price, dateTime, imagePath);
-        return isAdded;
+
+    public String getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
     public int getImg() {
@@ -86,4 +92,15 @@ public class Products {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public boolean insertProduct(){
+        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertProduct(name, category, description, price, dateTime, imagePath);
+        return isAdded;
+    }
+
+    public Cursor getDataProduct(){
+        Cursor cursor = Myapplication.getYdDatabaseAdapter().getDataOfProduct(idProduct);
+        return cursor;
+    }
+
 }

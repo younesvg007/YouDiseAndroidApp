@@ -11,7 +11,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class ImageStorage {
+public class ImageManage {
 
     private static StorageReference mStorageRef;
 

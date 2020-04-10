@@ -1,6 +1,9 @@
 package com.example.youdisenextlevel.Model;
 
+import android.database.Cursor;
+
 import com.example.youdisenextlevel.Application.Myapplication;
+import com.example.youdisenextlevel.Model.Database.YouDise;
 
 public class Users{
 
@@ -25,16 +28,20 @@ public class Users{
         this.password = password;
     }
 
-    /*public String getIdUser() {
-        return idUser;
-    }*/
-
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCountry() {
@@ -62,5 +69,10 @@ public class Users{
     public boolean checkMailUser(){
         boolean isExist = Myapplication.getYdDatabaseAdapter().checkMailUser(email);
         return isExist;
+    }
+
+    public Cursor getDataUser(){
+        Cursor cursor = Myapplication.getYdDatabaseAdapter().getDataOfUser(email);
+        return cursor;
     }
 }

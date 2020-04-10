@@ -1,5 +1,6 @@
 package com.example.youdisenextlevel.Model.Database;
 
+import android.media.Image;
 import android.provider.BaseColumns;
 
 public class YouDise implements BaseColumns {
@@ -57,4 +58,22 @@ public class YouDise implements BaseColumns {
             PRODUCTS_COL_IMAGE + " TEXT)";
     public static final String PRODUCTS_SQL_DROP_TABLE = "DROP TABLE " + PRODUCTS_TABLE_NAME + ";";
 
+    //Table CART
+    public static final String CART_TABLE_NAME = "cart";
+    public static final String CART_COL_ID = "cartID";
+    public static final String CART_COL_NAME = "NAME";
+    public static final String CART_COL_QUANTITY = "QUANTITY";
+    public static final String CART_COL_PRICE = "PRICE";
+    public static final String CART_COL_IMAGE = "IMAGE";
+    public static final String CART_COL_IDPRODUCT = "productID";
+    public static final String CART_COL_IDUSER = "userID";
+    public static final String CART_SQL_CREATE_TABLE = "CREATE TABLE " + CART_TABLE_NAME + " (" +
+            CART_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            CART_COL_NAME + " TEXT, " +
+            CART_COL_IMAGE + " TEXT, " +
+            CART_COL_QUANTITY + " INTEGER, " +
+            CART_COL_PRICE + " INTEGER, " +
+            CART_COL_IDPRODUCT + " INTEGER, " +
+            CART_COL_IDUSER + " INTEGER)";
+    public static final String CART_SQL_DROP_TABLE = "DROP TABLE " + CART_TABLE_NAME + ";";
 }

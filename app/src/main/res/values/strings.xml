@@ -11,6 +11,11 @@
     <string name="input_phone">Numéro de Tél.</string>
     <string name="input_password">Mot De Passe</string>
     <string name="input_country">Pays de Résidence</string>
+    <string name="input_Newusername">Nouveau nom d\'utilisateur</string>
+    <string name="input_Newemail">Nouvel Email</string>
+    <string name="input_Newphone">Nouveau numéro de Tél.</string>
+    <string name="input_Newpassword">Nouveau mot de passe</string>
+    <string name="input_Newcountry">Nouveau pays de Résidence</string>
     <string name="remember_me_checkbox">Se souvenir de moi</string>
     <string name="forgot_password">Mot de passe oublié ?</string>
     <string name="i_admin">Je suis un Admin ?</string>
@@ -44,10 +49,13 @@
     <string name="error_register_msg">Une erreur est survenue lors de l\'inscription !</string>
     <string name="wrong_logged_msg">Email ou mot de passe incorrect !</string>
     <string name="add_new_product">Ajouter Produit</string>
-    <string name="product_name">Nom du Produit...</string>
-    <string name="product_describe">Description du Produit...</string>
-    <string name="product_price">Prix du Produit...</string>
+    <string name="product_name">Nom du Produit</string>
+    <string name="product_category">Categorie du Produit</string>
+    <string name="product_describe">Description du Produit</string>
+    <string name="product_price">Prix du Produit</string>
+    <string name="product_datetime">Date du Produit</string>
     <string name="product_added">Produit ajouté avec succés !</string>
+    <string name="user_updated">Mise a jour réussi !</string>
     <string name="error_addproduct">Erreur produit lors de l\'insertion !</string>
     <string name="cart_name">Panier</string>
     <string name="category_name">Categories</string>
@@ -55,4 +63,11 @@
     <string name="setting_name">Paramètres</string>
     <string name="logout_name">Déconnexion</string>
     <string name="back_bt_name">Retour</string>
+    <string name="addcart_bt_name">Ajouter au panier</string>
+    <string name="cancel_setting">Annuler</string>
+    <string name="save_setting">Enregistrer</string>
+    <string name="title_setting">Modifier le profil</string>
+    <string name="time_update_account">Votre compte se remet à jour</string>
+    <string name="added_to_cart">Produit ajouté au Panier</string>
+    <string name="already_exist_in_cart">Votre Produit se trouve deja dans votre Panier</string>
 </resources>
