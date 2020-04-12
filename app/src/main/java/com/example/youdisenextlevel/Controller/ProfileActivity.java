@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private LinearLayout cart, setting, logout;
+    private LinearLayout cart, order, setting, logout;
     private Button backBtn;
     private TextView nameProfile, emailProfile;
     private CircleImageView imageProfile;

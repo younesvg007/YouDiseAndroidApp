@@ -120,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
             profileIntent.putExtra("id", idProduct);
             profileIntent.putExtra("email", email);
             startActivity(profileIntent);
-            Toast.makeText(HomeActivity.this, idList.get(position)+"", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(HomeActivity.this, idList.get(position)+"", Toast.LENGTH_SHORT).show();
         });
     }
 

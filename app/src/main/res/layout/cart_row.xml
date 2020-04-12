@@ -11,6 +11,7 @@
         android:layout_height="230dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
+        card_view:cardBackgroundColor="@color/colorBlueLight"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="10dp">
 
@@ -22,8 +23,8 @@
                 android:id="@+id/image_cart_item"
                 android:layout_below="@+id/name_cart_item"
                 android:layout_marginTop="10dp"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="190dp"
+                android:layout_height="180dp"
                 android:src="@mipmap/ic_launcher"
                 />
 
@@ -32,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/product_name"
-                android:textSize="26sp"
+                android:textSize="29sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
@@ -44,46 +45,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/product_category"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textColor="@color/colorBlack"
                 android:textStyle="italic"
                 android:layout_toRightOf="@+id/image_cart_item"
                 android:layout_toEndOf="@id/image_cart_item"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/name_cart_item"
                 />
 
-            <TextView
-                android:id="@+id/description_cart_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/product_describe"
-                android:textSize="23sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="italic"
-                android:layout_toRightOf="@+id/image_cart_item"
-                android:layout_toEndOf="@id/image_cart_item"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="7dp"
-                android:layout_below="@id/category_cart_item"
-                />
+
             <TextView
                 android:id="@+id/quantity_cart_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="quantité"
+                android:text="@string/quantity_cart"
                 android:textSize="21sp"
                 android:textColor="@color/colorBlue"
                 android:textStyle="italic"
                 android:layout_toRightOf="@+id/image_cart_item"
                 android:layout_toEndOf="@id/image_cart_item"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/description_cart_item"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/category_cart_item"
                 />
 
             <TextView
@@ -96,9 +83,9 @@
                 android:textStyle="normal"
                 android:layout_toRightOf="@+id/image_cart_item"
                 android:layout_toEndOf="@id/image_cart_item"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@id/quantity_cart_item"
                 />
 

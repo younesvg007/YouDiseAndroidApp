@@ -1,7 +1,10 @@
 package com.example.youdisenextlevel.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private String idProduct, email, nameP, price,imageKey;
+    private String idProduct, email, nameC, categoryC, price,imageKey;
     private TextView closeProduct, nameProductDetail, describeProductDetail, priceProductDetail;
     private ImageView imageProductDetail;
     private ElegantNumberButton quantityBtn;
@@ -58,13 +61,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             priceI = Integer.parseInt(price);
             idProductInt = Integer.parseInt(idProduct);
             quantity = Integer.parseInt(quantityBtn.getNumber());
-            Carts cart = new Carts(nameP, imageKey, quantity, priceI, idProductInt, idUser);
+            Carts cart = new Carts(nameC, categoryC, imageKey, quantity, priceI, idProductInt, idUser);
             boolean isExist = cart.checkProductUser();
             //Toast.makeText(this, isExist+"", Toast.LENGTH_SHORT).show();
             if (!isExist){
                 boolean isAdded = cart.insertCart();
                 if (isAdded){
-                    Toast.makeText(this, getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
+                    sendNotification();
+                    //Toast.makeText(this, getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
                     //Toast.makeText(this, quantityBtn.getNumber(), Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -82,6 +86,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, msgError, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void sendNotification() {
+        String msg = "Un nouveau produit à été ajouté dans le panier";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ProductDetailsActivity.this)
+                .setSmallIcon(R.drawable.cart)
+                .setContentTitle("Succès")
+                .setContentText(msg)
+                .setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(
+                Context.NOTIFICATION_SERVICE
+        );
+        notificationManager.notify(1, builder.build());
     }
 
     private void getInfosUser() {
@@ -110,8 +128,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             if (cursor.getCount() != 0){
                 while (cursor.moveToNext()){
                     //ne pas utiliser getter et setter sinon app crash
-                    nameP = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_NAME));
-                    String nameFull = idProduct + ". " + nameP;
+                    nameC = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_NAME));
+                    String nameFull = idProduct + ". " + nameC;
+                    categoryC = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_CATEGORY));
                     String describeP = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_DESCRIPTION));
                     price = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_PRICE));
                     String priceFull = price + " €";

@@ -59,9 +59,10 @@ public class YouDise implements BaseColumns {
     public static final String PRODUCTS_SQL_DROP_TABLE = "DROP TABLE " + PRODUCTS_TABLE_NAME + ";";
 
     //Table CART
-    public static final String CART_TABLE_NAME = "cart";
+    public static final String CART_TABLE_NAME = "carts";
     public static final String CART_COL_ID = "cartID";
     public static final String CART_COL_NAME = "NAME";
+    public static final String CART_COL_CATEGORY = "CATEGORY";
     public static final String CART_COL_QUANTITY = "QUANTITY";
     public static final String CART_COL_PRICE = "PRICE";
     public static final String CART_COL_IMAGE = "IMAGE";
@@ -70,10 +71,34 @@ public class YouDise implements BaseColumns {
     public static final String CART_SQL_CREATE_TABLE = "CREATE TABLE " + CART_TABLE_NAME + " (" +
             CART_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CART_COL_NAME + " TEXT, " +
+            CART_COL_CATEGORY + " TEXT, " +
             CART_COL_IMAGE + " TEXT, " +
             CART_COL_QUANTITY + " INTEGER, " +
             CART_COL_PRICE + " INTEGER, " +
             CART_COL_IDPRODUCT + " INTEGER, " +
             CART_COL_IDUSER + " INTEGER)";
     public static final String CART_SQL_DROP_TABLE = "DROP TABLE " + CART_TABLE_NAME + ";";
+
+    //Table ORDER
+    public static final String CHECKOUT_TABLE_NAME = "checkout";
+    public static final String CHECKOUT_COL_ID = "checkoutID";
+    public static final String CHECKOUT_COL_NAME = "NAME";
+    public static final String CHECKOUT_COL_EMAIL = "EMAIL";
+    public static final String CHECKOUT_COL_ADRESS = "ADRESS";
+    public static final String CHECKOUT_COL_COUNTRY = "COUNTRY";
+    public static final String CHECKOUT_COL_CARDBANK = "CARDBANK";
+    public static final String CHECKOUT_COL_TOTALAMOUNT = "TOTALAMOUNT";
+    public static final String CHECKOUT_COL_DATETIME= "DATETIME";
+    public static final String CHECKOUT_COL_IDUSER = "userID";
+    public static final String CHECKOUT_SQL_CREATE_TABLE = "CREATE TABLE " + CHECKOUT_TABLE_NAME + " (" +
+            CHECKOUT_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            CHECKOUT_COL_NAME + " TEXT, " +
+            CHECKOUT_COL_EMAIL + " TEXT, " +
+            CHECKOUT_COL_ADRESS + " TEXT, " +
+            CHECKOUT_COL_COUNTRY + " TEXT, " +
+            CHECKOUT_COL_CARDBANK + " TEXT, " +
+            CHECKOUT_COL_TOTALAMOUNT + " TEXT, " +
+            CHECKOUT_COL_DATETIME + " TEXT, " +
+            CHECKOUT_COL_IDUSER + " INTEGER)";
+    public static final String CHECKOUT_SQL_DROP_TABLE = "DROP TABLE " + CHECKOUT_TABLE_NAME + ";";
 }

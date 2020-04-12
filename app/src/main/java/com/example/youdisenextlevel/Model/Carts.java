@@ -1,18 +1,20 @@
 package com.example.youdisenextlevel.Model;
 
 import com.example.youdisenextlevel.Application.Myapplication;
+import com.example.youdisenextlevel.Model.Database.YouDise;
 
 public class Carts {
 
-    private String idCart, nameP, image;
+    private String idCart, nameC, categoryC,  image;
     private int price ,quantity, idUser, idProduct;
 
     public Carts() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Carts(String nameP, String image, int quantity, int price, int idProduct, int idUser) {
-        this.nameP = nameP;
+    public Carts(String nameP, String categoryC, String image, int quantity, int price, int idProduct, int idUser) {
+        this.nameC = nameP;
+        this.categoryC = categoryC;
         this.image = image;
         this.quantity = quantity;
         this.price = price;
@@ -20,12 +22,20 @@ public class Carts {
         this.idProduct = idProduct;
     }
 
-    public String getNameP() {
-        return nameP;
+    public String getNameC() {
+        return nameC;
     }
 
-    public void setNameP(String nameP) {
-        this.nameP = nameP;
+    public void setNameC(String nameC) {
+        this.nameC = nameC;
+    }
+
+    public String getCategoryC() {
+        return categoryC;
+    }
+
+    public void setCategoryC(String categoryC) {
+        this.categoryC = categoryC;
     }
 
     public String getImage() {
@@ -68,8 +78,16 @@ public class Carts {
         this.idCart = idCart;
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
     public boolean insertCart(){
-        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertCart(nameP, image, quantity, price, idProduct, idUser);
+        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertCart(nameC, categoryC, image, quantity, price, idProduct, idUser);
         return isAdded;
     }
 
@@ -79,4 +97,15 @@ public class Carts {
         boolean isExist = Myapplication.getYdDatabaseAdapter().checkProductUser(idProductS, idUserS);
         return isExist;
     }
+
+    public Integer deleteSingleCart(){
+        Integer row = Myapplication.getYdDatabaseAdapter().deleteSingleCart(idCart);
+        return row;
+    }
+
+    public Integer deleteAllCartOfUser(){
+        String idUserDelete = String.valueOf(idUser);
+        Integer rowDeleted = Myapplication.getYdDatabaseAdapter().deleteAllCartOfUser(idUserDelete);
+        return rowDeleted;
+    };
 }

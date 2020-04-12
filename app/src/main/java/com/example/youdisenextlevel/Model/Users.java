@@ -7,7 +7,7 @@ import com.example.youdisenextlevel.Model.Database.YouDise;
 
 public class Users{
 
-    private String idUser;
+    private int idUser;
     private String username, email, password,  phoneNum, country;
 
     public Users() {
@@ -25,6 +25,22 @@ public class Users{
 
     public Users(String email, String password) {
         this.email = email;
+        this.password = password;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 

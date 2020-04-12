@@ -99,8 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
         notAdminLink = (TextView) findViewById(R.id.not_admin_register_link);
         loadingBar = new ProgressDialog(this);
 
-        inputName.setText("soolking");
-        inputEmail.setText("soolking@mail.com");
+        inputName.setText("you");
+        inputEmail.setText("you@mail.com");
         inputPassword.setText("banana");
         inputPhone.setText("0123456100");
         inputCountry.setText("Belgique");

@@ -174,10 +174,11 @@ public class YDDatabaseAdapter {
         return cursor;
     }
 
-    //inserting PRODUCT in database
-    public boolean insertCart(String name, String imageUrl, int quantity, int price, int idProduct, int idUser) {
+    //inserting CART in database
+    public boolean insertCart(String name, String category, String imageUrl, int quantity, int price, int idProduct, int idUser) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(YouDise.CART_COL_NAME, name);
+        contentValues.put(YouDise.CART_COL_CATEGORY, category);
         contentValues.put(YouDise.CART_COL_IMAGE, imageUrl);
         contentValues.put(YouDise.CART_COL_QUANTITY, quantity);
         contentValues.put(YouDise.CART_COL_PRICE, price);
@@ -219,5 +220,42 @@ public class YDDatabaseAdapter {
         else{
             return false;
         }
+    }
+
+    public Cursor getAllCart(){
+        Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+YouDise.CART_TABLE_NAME, null);
+        return cursor;
+    }
+
+    public Cursor getCartOfUser(String idUser){
+        Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.CART_TABLE_NAME+" WHERE "+YouDise.CART_COL_IDUSER + "= ?", new String[]{idUser});
+        return cursor;
+    }
+
+    public Integer deleteSingleCart(String idCart){
+        Integer rowDeleted = sqLiteDB.delete(YouDise.CART_TABLE_NAME, YouDise.CART_COL_ID + "= ?",new String[]{idCart});
+        return rowDeleted;
+    };
+
+    public Integer deleteAllCartOfUser(String idUser){
+        Integer rowDeleted = sqLiteDB.delete(YouDise.CART_TABLE_NAME, YouDise.CART_COL_IDUSER + "= ?",new String[]{idUser});
+        return rowDeleted;
+    };
+
+    //inserting ORDER in database
+    public boolean insertOrder(String name, String email, String adress, String country, String cardBank, String totalAmount, String dateTime, int idUser) {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(YouDise.CHECKOUT_COL_NAME, name);
+        contentValues.put(YouDise.CHECKOUT_COL_EMAIL, email);
+        contentValues.put(YouDise.CHECKOUT_COL_ADRESS, adress);
+        contentValues.put(YouDise.CHECKOUT_COL_COUNTRY, country);
+        contentValues.put(YouDise.CHECKOUT_COL_CARDBANK, cardBank);
+        contentValues.put(YouDise.CHECKOUT_COL_TOTALAMOUNT, totalAmount);
+        contentValues.put(YouDise.CHECKOUT_COL_DATETIME, dateTime);
+        contentValues.put(YouDise.CHECKOUT_COL_IDUSER, idUser);
+
+        long resultId = sqLiteDB.insert(YouDise.CHECKOUT_TABLE_NAME, null, contentValues);
+        return resultId != -1;
     }
 }

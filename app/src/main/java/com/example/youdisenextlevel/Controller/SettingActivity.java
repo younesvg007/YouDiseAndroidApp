@@ -58,9 +58,9 @@ public class SettingActivity extends AppCompatActivity {
         passwordNew = (EditText) findViewById(R.id.password_profile_setting);
         loadingBar = new ProgressDialog(this);
 
-        nameNew.setText("yu");
-        emailNew.setText("yu@mail.com");
-        passwordNew.setText("alloha");
+        nameNew.setText("nes");
+        emailNew.setText("nes@mail.com");
+        passwordNew.setText("banana");
     }
 
     boolean isEmailValid(CharSequence email) {

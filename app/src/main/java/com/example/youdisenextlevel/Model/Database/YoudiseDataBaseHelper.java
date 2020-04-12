@@ -20,6 +20,7 @@ public class YoudiseDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(YouDise.ADMINS_SQL_CREATE_TABLE);
         db.execSQL(YouDise.PRODUCTS_SQL_CREATE_TABLE);
         db.execSQL(YouDise.CART_SQL_CREATE_TABLE);
+        db.execSQL(YouDise.CHECKOUT_SQL_CREATE_TABLE);
     }
 
     @Override
@@ -29,6 +30,7 @@ public class YoudiseDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(YouDise.ADMINS_SQL_DROP_TABLE);
         db.execSQL(YouDise.PRODUCTS_SQL_DROP_TABLE);
         db.execSQL(YouDise.CART_SQL_DROP_TABLE);
+        db.execSQL(YouDise.CHECKOUT_SQL_DROP_TABLE);
         onCreate(db);
     }
 }

@@ -200,7 +200,7 @@ public class loginActivity extends AppCompatActivity {
         adminLink = (TextView) findViewById(R.id.admin_login_link);
         notAdminLink = (TextView) findViewById(R.id.not_admin_login_link);
 
-        inputEmail.setText("soolking@mail.com");
+        inputEmail.setText("you@mail.com");
         inputPassword.setText("banana");
     }
 }

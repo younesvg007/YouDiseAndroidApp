@@ -13,10 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Controller.CartActivity"
-            android:label="Panier"
-            android:theme="@style/AppThemeBar" />
+        <activity android:name=".Controller.OrderActivity"></activity>
+        <activity android:name=".Controller.CartActivity" />
         <activity android:name=".Controller.ProductDetailsActivity" />
         <activity android:name=".Controller.SettingActivity" />
         <activity android:name=".Controller.ProfileActivity" />

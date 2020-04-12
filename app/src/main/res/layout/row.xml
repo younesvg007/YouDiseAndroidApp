@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/product_name"
-                android:textSize="26sp"
+                android:textSize="28sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
@@ -82,7 +82,7 @@
                 android:layout_toEndOf="@id/image_product_item"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="13dp"
                 android:layout_below="@id/description_product_item"
                 />
             <TextView
