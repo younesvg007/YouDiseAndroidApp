@@ -105,7 +105,7 @@ public class OrderActivity extends AppCompatActivity {
             Toast.makeText(this, isAdded+"", Toast.LENGTH_SHORT).show();
             if (isAdded){
                 sendNotification();
-                Toast.makeText(this, getString(R.string.product_added), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Commande Envoyé", Toast.LENGTH_SHORT).show();
                 finish();
             }
             else{

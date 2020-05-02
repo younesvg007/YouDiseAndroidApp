@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.youdisenextlevel.R;
+
+import org.w3c.dom.Text;
 
 public class CategoryAdminActivity extends AppCompatActivity {
 
     private ImageView mobiles, watches, laptops, headphones;
     private ImageView sweathers, femaleDress, sport, tshirts;
     private ImageView shoes, hats, pursesBag, glasses;
+    private TextView getBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,13 @@ public class CategoryAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category_admin);
 
         initViews();
+
+        getBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mobiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +143,8 @@ public class CategoryAdminActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        getBack = (TextView) findViewById(R.id.close_admin);
+
         mobiles = (ImageView) findViewById(R.id.mobile1);
         watches = (ImageView) findViewById(R.id.watches1);
         laptops = (ImageView) findViewById(R.id.laptops1);

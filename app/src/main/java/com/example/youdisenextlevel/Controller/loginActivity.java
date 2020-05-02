@@ -157,8 +157,8 @@ public class loginActivity extends AppCompatActivity {
         if (checkAdmin){
             //sendUserToHome();
             loadingBar.dismiss();
-            sendAdminToAdminCategory();
-
+            //sendAdminToAdminCategory();
+            sendAdminToListProduct();
             Toast.makeText(loginActivity.this, getString(R.string.logged_Admin_msg), Toast.LENGTH_SHORT).show();
         }
         else{
@@ -185,6 +185,11 @@ public class loginActivity extends AppCompatActivity {
     //direction vers AdminCategory Activity
     private void sendAdminToAdminCategory() {
         Intent mainIntent = new Intent(loginActivity.this, CategoryAdminActivity.class);
+        startActivity(mainIntent);
+    }
+
+    private void sendAdminToListProduct() {
+        Intent mainIntent = new Intent(loginActivity.this, ListProductAdminActivity.class);
         startActivity(mainIntent);
     }
 

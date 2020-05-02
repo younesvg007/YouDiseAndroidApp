@@ -174,6 +174,16 @@ public class YDDatabaseAdapter {
         return cursor;
     }
 
+    public Integer deleteSingleProduct(String idProduct){
+        Integer rowDeleted = sqLiteDB.delete(YouDise.PRODUCTS_TABLE_NAME, YouDise.PRODUCTS_COL_ID + "= ?",new String[]{idProduct});
+        return rowDeleted;
+    };
+
+    public Integer deleteAllProduct(){
+        Integer rowDeleted = sqLiteDB.delete(YouDise.PRODUCTS_TABLE_NAME, null, null);
+        return rowDeleted;
+    };
+
     //inserting CART in database
     public boolean insertCart(String name, String category, String imageUrl, int quantity, int price, int idProduct, int idUser) {
         ContentValues contentValues = new ContentValues();
@@ -257,5 +267,10 @@ public class YDDatabaseAdapter {
 
         long resultId = sqLiteDB.insert(YouDise.CHECKOUT_TABLE_NAME, null, contentValues);
         return resultId != -1;
+    }
+
+    public Cursor getOrderOfUser(String idUser){
+        Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.CHECKOUT_TABLE_NAME+" WHERE "+YouDise.CHECKOUT_COL_IDUSER + "= ?", new String[]{idUser});
+        return cursor;
     }
 }

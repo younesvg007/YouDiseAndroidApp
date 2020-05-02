@@ -6,13 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".Controller.CategoryAdminActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_admin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/close_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_setting"
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_alignParentStart="true"/>
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/slogan_category1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:layout_below="@id/toolbar_admin"
         android:text="@string/add_new_product"
         android:textAlignment="center"
         android:textSize="26sp"

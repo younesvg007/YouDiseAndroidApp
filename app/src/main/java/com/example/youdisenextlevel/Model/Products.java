@@ -103,4 +103,13 @@ public class Products {
         return cursor;
     }
 
+    public Integer deleteSingleProduct(){
+        Integer row = Myapplication.getYdDatabaseAdapter().deleteSingleProduct(idProduct);
+        return row;
+    }
+
+    public Integer deleteAllProduct(){
+        Integer rowDeleted = Myapplication.getYdDatabaseAdapter().deleteAllProduct();
+        return rowDeleted;
+    };
 }

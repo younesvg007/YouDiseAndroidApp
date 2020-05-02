@@ -49,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
-        String quantityProduct = getDataSet().size() + "";
-        Toast.makeText(this, quantityProduct + " Produits au Total", Toast.LENGTH_SHORT).show();
     }
 
     private ArrayList<Products> getDataSet() {

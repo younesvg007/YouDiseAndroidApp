@@ -54,6 +54,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToOrderList();
+            }
+        });
+
         setting.setOnClickListener(v -> {
             sendUserToSetting();
         });
@@ -94,6 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initFields() {
         cart = (LinearLayout) findViewById(R.id.linear_cart_layout);
+        order = (LinearLayout) findViewById(R.id.linear_order_layout);
         setting = (LinearLayout) findViewById(R.id.linear_setting_layout);
         logout = (LinearLayout) findViewById(R.id.linear_logout_layout);
         backBtn = (Button) findViewById(R.id.back_btn);
@@ -108,6 +116,12 @@ public class ProfileActivity extends AppCompatActivity {
         Intent cartIntent = new Intent(ProfileActivity.this, CartActivity.class);
         cartIntent.putExtra("email", mail);
         startActivity(cartIntent);
+    }
+
+    private void sendUserToOrderList() {
+        Intent orderListIntent = new Intent(ProfileActivity.this, OrderListActivity.class);
+        orderListIntent.putExtra("mail", mail);
+        startActivity(orderListIntent);
     }
 
     private void sendUserToSetting() {

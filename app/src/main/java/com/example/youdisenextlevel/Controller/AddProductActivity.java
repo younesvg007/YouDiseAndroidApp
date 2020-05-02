@@ -100,6 +100,7 @@ public class AddProductActivity extends AppCompatActivity {
                     taskSnapshot -> {System.out.println("image insert ok"); });
             Toast.makeText(this, getString(R.string.product_added), Toast.LENGTH_SHORT).show();
             finish();
+            //sendAdminToMain();
         }
         else{
             Toast.makeText(this, getString(R.string.error_addproduct), Toast.LENGTH_SHORT).show();
@@ -133,5 +134,11 @@ public class AddProductActivity extends AppCompatActivity {
             imageUri = data.getData();
             inputProductImage.setImageURI(imageUri);
         }
+    }
+
+    private void sendAdminToMain() {
+        Intent mainIntent = new Intent(AddProductActivity.this, loginActivity.class);
+        startActivity(mainIntent);
+        Toast.makeText(this, getString(R.string.logout_User_msg), Toast.LENGTH_SHORT).show();
     }
 }
