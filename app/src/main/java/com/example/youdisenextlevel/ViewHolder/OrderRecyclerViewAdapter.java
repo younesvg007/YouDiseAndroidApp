@@ -66,12 +66,16 @@ public class OrderRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataHolder holder, int position) {
-        holder.idOrder.setText(mDataset.get(position).getIdOrder());
+        String nCommande = "Commande n° " + mDataset.get(position).getIdOrder();
+        holder.idOrder.setText(nCommande);
         holder.adressOrder.setText(mDataset.get(position).getAdress());
         holder.countryOrder.setText(mDataset.get(position).getCountry());
-        holder.cardBankOrder.setText(mDataset.get(position).getBankCard());
-        holder.totalAmountOrder.setText(mDataset.get(position).getTotalAmount());
-        holder.dateTimeOrder.setText(mDataset.get(position).getDateTime());
+        String nCardBank = "Carte Bancaire : " + mDataset.get(position).getBankCard();
+        holder.cardBankOrder.setText(nCardBank);
+        String totalPrix = "Prix Total : " + mDataset.get(position).getTotalAmount();
+        holder.totalAmountOrder.setText(totalPrix);
+        String timeOrder = "Commande faite le " + mDataset.get(position).getDateTime();
+        holder.dateTimeOrder.setText(timeOrder);
     }
 
     public void addItem(Orders commande, int index) {

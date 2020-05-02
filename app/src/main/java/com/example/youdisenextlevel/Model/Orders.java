@@ -94,9 +94,9 @@ public class Orders {
         this.adress = adress;
     }
 
-    public boolean insertOrder(){
+    /*public boolean insertOrder(){
         boolean isAdded = Myapplication.getYdDatabaseAdapter().insertOrder(name, email, adress, country, bankCard, totalAmount, dateTime, idUser);
         return isAdded;
-    }
+    }*/
 
 }
