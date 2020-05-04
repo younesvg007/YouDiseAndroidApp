@@ -98,7 +98,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void sendNotification() {
         String msg = "Le prix Total est de "+toCheckout.getText()+ ". Passez votre commande.";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(CartActivity.this, "my_channel_01")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(CartActivity.this, Myapplication.ID_CHANNEL)
                 .setSmallIcon(R.drawable.add_cart)
                 .setContentTitle("Panier validé !")
                 .setContentText(msg)

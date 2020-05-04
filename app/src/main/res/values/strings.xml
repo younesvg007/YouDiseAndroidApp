@@ -87,4 +87,5 @@
     <string name="adress">Adresse</string>
     <string name="card_bank">Carte de Crédit</string>
     <string name="to_order">Commander</string>
+    <string name="return_to_profile">Profil</string>
 </resources>

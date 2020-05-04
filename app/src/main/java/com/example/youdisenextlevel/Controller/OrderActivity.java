@@ -122,7 +122,7 @@ public class OrderActivity extends AppCompatActivity {
 
     private void sendNotification() {
         String msg = "Votre colis vous sera envoyé. Au plaisir de vous revoir";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(OrderActivity.this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(OrderActivity.this, Myapplication.ID_CHANNEL)
                 .setSmallIcon(R.drawable.orders)
                 .setContentTitle("Commande confirmé !")
                 .setContentText(msg)

@@ -3,6 +3,7 @@ package com.example.youdisenextlevel.Controller;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.youdisenextlevel.Application.Myapplication;
 import com.example.youdisenextlevel.Model.Carts;
 import com.example.youdisenextlevel.Model.Database.ImageManage;
 import com.example.youdisenextlevel.Model.Database.YouDise;
@@ -90,7 +92,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private void sendNotification() {
         String msg = "Un nouveau produit à été ajouté dans le panier";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ProductDetailsActivity.this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ProductDetailsActivity.this, Myapplication.ID_CHANNEL)
                 .setSmallIcon(R.drawable.cart)
                 .setContentTitle("Succès")
                 .setContentText(msg)

@@ -1,13 +1,17 @@
 package com.example.youdisenextlevel.Application;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.example.youdisenextlevel.Model.Database.YDDatabaseAdapter;
 
 public class Myapplication extends Application {
 
+    public static final String ID_CHANNEL = "1";
     private static boolean firstLaunch;
     private static String sharedPreferencesKey;
     private static YDDatabaseAdapter ydDatabaseAdapter;
@@ -23,6 +27,8 @@ public class Myapplication extends Application {
         firstLaunch = sharedPreferences.getBoolean(sharedPreferencesKey, true);
 
         ydDatabaseAdapter = new YDDatabaseAdapter(this);
+
+        createNotificationChannels();
     }
 
 
@@ -41,4 +47,19 @@ public class Myapplication extends Application {
                 .apply();
     }
 
+    private void createNotificationChannels(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channelNotif = new NotificationChannel(
+                    ID_CHANNEL,
+                    "channel 1",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channelNotif.setDescription("Id Channel is 1");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channelNotif);
+        }
+
+    }
 }
