@@ -54,46 +54,38 @@ public class CartActivity extends AppCompatActivity {
         email = getIntent().getExtras().get("email").toString();
 
         initField();
+        initRecyclerView();
 
+        priceBtn = priceTotal + " €"; // prix total du panier en euro
+        toCheckout.setText(priceBtn); //affiche le prix total du panier
+
+        closeCart.setOnClickListener(v -> finish());
+
+        refreshCart.setOnClickListener(v -> clearBasket());
+
+        //cliquer sur le bouton affichant le prix pour ensuite se diriger vers le formulaire de commande
+        toCheckout.setOnClickListener(v -> {
+
+            if (!toCheckout.getText().equals("0 €")){
+
+                sendNotification(); //methode permettant d'envoyer une Notification
+
+                sendUserToOrder(); // direction vers le fomulaire de commande => Order activity
+            }
+            else{
+                //si le panier est vide => impossible de passer une commande
+                Toast.makeText(CartActivity.this, getString(R.string.impossible_to_checkout ), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.cart_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CartRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
-
-        //Toast.makeText(this, priceTotal + "", Toast.LENGTH_SHORT).show();
-        priceBtn = priceTotal + " €";
-        toCheckout.setText(priceBtn);
-
-        closeCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        refreshCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearBasket();
-            }
-        });
-
-        toCheckout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!toCheckout.getText().equals("0 €")){
-
-                    sendNotification();
-                    sendUserToOrder();
-                }
-                else{
-                    Toast.makeText(CartActivity.this, getString(R.string.impossible_to_checkout ), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void sendNotification() {
@@ -113,17 +105,18 @@ public class CartActivity extends AppCompatActivity {
     private void sendUserToOrder() {
         Intent orderIntent = new Intent(CartActivity.this, OrderActivity.class);
         orderIntent.putExtra("mail", email);
-        orderIntent.putExtra("totalprice", toCheckout.getText());
+        orderIntent.putExtra("totalprice", toCheckout.getText()); // transfert du montant total du panier pour la commande
         startActivity(orderIntent);
     }
 
+    // methode permettant de vider tout le panier
     private void clearBasket() {
 
         Carts panier = new Carts();
         panier.setIdUser(idUser);
         Toast.makeText(this, results.size()+"", Toast.LENGTH_SHORT).show();
         try {
-            Integer countRowsDeleted = panier.deleteAllCartOfUser();
+            Integer countRowsDeleted = panier.deleteAllCartOfUser(); // recoit un integer pour verifier si la requete a supprimer toute la table panier
             if (countRowsDeleted > 0){
                 Toast.makeText(this, getString(R.string.empty_basket), Toast.LENGTH_SHORT).show();
                 finish();
@@ -145,7 +138,7 @@ public class CartActivity extends AppCompatActivity {
         refreshCart = (TextView) findViewById(R.id.refresh_cart_tv);
     }
 
-
+    //envoit arraylist contenant tous les element du panier
     private ArrayList<Carts> getDataSet() {
         results = new ArrayList<>();
         cartList = new ArrayList<>();
@@ -176,8 +169,7 @@ public class CartActivity extends AppCompatActivity {
                 results.add(index, cart);
                 idList.add(id);
                 cartList.add(idCartItem);
-                //products.setId(id);
-                //Toast.makeText(this, idCartItem+"", Toast.LENGTH_SHORT).show();
+
                 ++index;
                 ++idCartItem;
                 priceTotal += priceItemTotal;
@@ -189,9 +181,6 @@ public class CartActivity extends AppCompatActivity {
         Collections.reverse(cartList);
         Collections.reverse(idList);
 
-        //Toast.makeText(this, idList.toString(), Toast.LENGTH_SHORT).show();
-        //pour afficher produit les plus recent d'abord
-
         return results;
     }
 
@@ -199,13 +188,12 @@ public class CartActivity extends AppCompatActivity {
         try {
             user = new Users();
             user.setEmail(email);
+
             Cursor cursor = user.getDataUser();
             if (cursor.getCount() != 0){
                 while (cursor.moveToNext()){
-                    //ne pas utiliser getter et setter sinon app crash
                     idUser = cursor.getInt(cursor.getColumnIndex(YouDise.USERS_COL_ID));
                     idUserS = String.valueOf(idUser);
-                    //Toast.makeText(this, idUserS, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -215,58 +203,54 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
+    //lorque on clique sur un item, un alert dialogue souvre pour confirmer la suppression du produit du panier
     @Override
     protected void onResume() {
         super.onResume();
-        ((CartRecyclerViewAdapter) mAdapter).setOnItemClickListener(new CartRecyclerViewAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
+        ((CartRecyclerViewAdapter) mAdapter).setOnItemClickListener((position, v) -> {
 
-                AlertDialog.Builder dialogDelete = new AlertDialog.Builder(CartActivity.this);
-                dialogDelete.setTitle(getString(R.string.deletion_product) + cartList.get(position));
-                dialogDelete.setMessage(getString(R.string.sure_to_delete));
-                dialogDelete.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Carts carts = new Carts();
-                        String idCart = idList.get(position)+"";
-                        carts.setIdCart(idCart);
-                        //Toast.makeText(CartActivity.this, idCart, Toast.LENGTH_SHORT).show();
-                        try {
-                            Integer rowDeleted = carts.deleteSingleCart();
-                            if (rowDeleted > 0){
-                                Toast.makeText(CartActivity.this, getString(R.string.product_deleted), Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(CartActivity.this, results.get(position).getPrice()+"", Toast.LENGTH_SHORT).show();
+            //creation d'un alert dialog
+            AlertDialog.Builder dialogDelete = new AlertDialog.Builder(CartActivity.this);
+            dialogDelete.setTitle(getString(R.string.deletion_product) + cartList.get(position));
+            dialogDelete.setMessage(getString(R.string.sure_to_delete));
 
-                                priceTotal -= results.get(position).getPrice();
-                                priceBtn = priceTotal + " €";
-                                toCheckout.setText(priceBtn);
-                                //cela supprimera un item va falloir rafraichir pour revenir a la page
-                                ((CartRecyclerViewAdapter) mAdapter).deleteItem(position);
-                                if (priceTotal == 0){
-                                    finish();
-                                }
-                            }
-                            else{
-                                Toast.makeText(CartActivity.this, getString(R.string.refresh_activity), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch(Exception e){
-                            String msgError = e.getMessage();
-                            Toast.makeText(CartActivity.this, msgError, Toast.LENGTH_SHORT).show();
+            //si oui , supression du produit du panier
+            dialogDelete.setPositiveButton("Oui", (dialog, which) -> {
+
+                Carts carts = new Carts();
+                String idCart = idList.get(position)+"";
+                carts.setIdCart(idCart);
+                try {
+
+                    // appel a la requete qui va supprimer uniquement le produit cliquer en utilisant id du produit et id de luser
+                    Integer rowDeleted = carts.deleteSingleCart();
+                    if (rowDeleted > 0){
+
+                        Toast.makeText(CartActivity.this, getString(R.string.product_deleted), Toast.LENGTH_SHORT).show();
+
+                        //mise a jour du prix en temps reel (diminution des qu un produit est supprimer)
+                        priceTotal -= results.get(position).getPrice();
+                        priceBtn = priceTotal + " €";
+                        toCheckout.setText(priceBtn);
+
+                        //cela supprimera un item va falloir rafraichir pour revenir a la page
+                        ((CartRecyclerViewAdapter) mAdapter).deleteItem(position);
+                        if (priceTotal == 0){
+                            finish();
                         }
                     }
-                });
-
-                dialogDelete.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    else{
+                        Toast.makeText(CartActivity.this, getString(R.string.refresh_activity), Toast.LENGTH_SHORT).show();
                     }
-                });
-                dialogDelete.show();
-            }
+                }
+                catch(Exception e){
+                    String msgError = e.getMessage();
+                    Toast.makeText(CartActivity.this, msgError, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dialogDelete.setNegativeButton("Non", (dialog, which) -> dialog.dismiss());
+            dialogDelete.show();
         });
 
     }

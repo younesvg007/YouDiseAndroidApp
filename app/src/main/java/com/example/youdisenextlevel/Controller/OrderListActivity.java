@@ -49,17 +49,9 @@ public class OrderListActivity extends AppCompatActivity {
         Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
 
         initField();
-
         initRecyclerView();
 
-
-        cancelOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        cancelOrder.setOnClickListener(v -> finish());
     }
 
     private void initRecyclerView() {
@@ -79,9 +71,10 @@ public class OrderListActivity extends AppCompatActivity {
         results = new ArrayList<>();
         getIdUser();
 
+        //recupere seulement les commandes qui appartiennent à l'user
         Cursor cursor = Myapplication.getYdDatabaseAdapter().getOrderOfUser(idUserS);
         int index = 0;
-        int indexOrder = 1;
+        int indexOrder = 1; // pour le
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -116,13 +109,12 @@ public class OrderListActivity extends AppCompatActivity {
         try {
             user = new Users();
             user.setEmail(email);
+
             Cursor cursor = user.getDataUser();
             if (cursor.getCount() != 0){
                 while (cursor.moveToNext()){
-                    //ne pas utiliser getter et setter sinon app crash
                     idUser = cursor.getInt(cursor.getColumnIndex(YouDise.USERS_COL_ID));
                     idUserS = String.valueOf(idUser);
-                    //Toast.makeText(this, idUserS, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -135,11 +127,8 @@ public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ((OrderRecyclerViewAdapter) mAdapter).setOnItemClickListener(new OrderRecyclerViewAdapter.MyClickListener(){
-            @Override
-            public void onItemClick(int position, View v) {
+        ((OrderRecyclerViewAdapter) mAdapter).setOnItemClickListener((position, v) -> {
 
-            }
         });
     }
 }

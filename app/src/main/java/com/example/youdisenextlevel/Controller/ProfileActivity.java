@@ -41,41 +41,30 @@ public class ProfileActivity extends AppCompatActivity {
         initFields();
 
         mail = getIntent().getExtras().get("mail").toString();
-        emailProfile.setText(mail);
-        //Toast.makeText(this, mail, Toast.LENGTH_SHORT).show();
+
+        // permet d'afficher le logo du profil avec l'image recupéré dans Firebase Storage
         ImageManage.getImage("20200408201111.jpg", imageProfile);
 
+        //permet d'afficher les infos du users
         setInfos(mail);
 
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendUserToCart();
-            }
-        });
+        //Direction vers Cart Activity
+        cart.setOnClickListener(v -> sendUserToCart());
 
-        order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendUserToOrderList();
-            }
-        });
+        //Direction vers Order List Activity
+        order.setOnClickListener(v -> sendUserToOrderList());
 
-        setting.setOnClickListener(v -> {
-            sendUserToSetting();
-        });
+        //Direction vers Setting Activity
+        setting.setOnClickListener(v -> sendUserToSetting());
 
+        //deconnexion
         logout.setOnClickListener(v -> {
             //cancelRemember();
             sendUserToMain();
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        //retour a la page d'accueil
+        backBtn.setOnClickListener(v -> finish());
 
     }
 
@@ -86,12 +75,11 @@ public class ProfileActivity extends AppCompatActivity {
             Cursor cursor = user.getDataUser();
             if (cursor.getCount() != 0){
                 while (cursor.moveToNext()){
-                    //ne pas utiliser getter et setter sinon app crash
                     String name = cursor.getString(cursor.getColumnIndex(YouDise.USERS_COL_USERNAME));
-                    //Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
                     nameProfile.setText(name);
                 }
             }
+            emailProfile.setText(email);
         }
         catch (Exception e){
             String msgError = e.getMessage();
@@ -109,8 +97,6 @@ public class ProfileActivity extends AppCompatActivity {
         nameProfile = (TextView) findViewById(R.id.name_profile);
         emailProfile = (TextView) findViewById(R.id.email_profile);
     }
-
-
 
     private void sendUserToCart() {
         Intent cartIntent = new Intent(ProfileActivity.this, CartActivity.class);
@@ -130,12 +116,14 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(settingIntent);
     }
 
+    //Retour au Main Activity
     private void sendUserToMain() {
         Intent mainIntent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(mainIntent);
         Toast.makeText(this, getString(R.string.logout_User_msg), Toast.LENGTH_SHORT).show();
     }
 
+    //permet de desactiver le "Remember me"
     private void cancelRemember() {
         SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();

@@ -28,52 +28,48 @@ public class loginActivity extends AppCompatActivity {
     private Button loginBtn;
     private ProgressDialog loadingBar;
     private CheckBox rememberChck;
-
     private String tableName = "users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //permet de lier le layout avec la classe Activity de java
         setContentView(R.layout.activity_login);
 
+        // methode qui permet de lier tous les widegts de l'interface utilisateur(xml) avec la partie logique
         initiatizeField();
 
-        //mini-memoire
+        //initiatialisation pour la fonctionalité "se souvenir de moi"
         initRemember();
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                authentification();
-            }
+        loginBtn.setOnClickListener(v -> authentification());
+
+        adminLink.setOnClickListener(v -> {
+
+            loginBtn.setText(R.string.app_login_admin);
+            adminLink.setVisibility(View.INVISIBLE);
+            notAdminLink.setVisibility(View.VISIBLE);
+
+            tableName = "Admins";
+            Toast.makeText(loginActivity.this, tableName, Toast.LENGTH_SHORT).show();
         });
 
-        adminLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        notAdminLink.setOnClickListener(v -> {
 
-                loginBtn.setText("Connexion Admin");
-                adminLink.setVisibility(View.INVISIBLE);
-                notAdminLink.setVisibility(View.VISIBLE);
+            loginBtn.setText(getString(R.string.app_login));
+            adminLink.setVisibility(View.VISIBLE);
+            notAdminLink.setVisibility(View.INVISIBLE);
 
-                tableName = "Admins";
-                Toast.makeText(loginActivity.this, tableName, Toast.LENGTH_SHORT).show();
-            }
+            tableName = "Users";
+            Toast.makeText(loginActivity.this, tableName, Toast.LENGTH_SHORT).show();
         });
 
-        notAdminLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginBtn.setText(getString(R.string.app_login));
-                adminLink.setVisibility(View.VISIBLE);
-                notAdminLink.setVisibility(View.INVISIBLE);
-
-                tableName = "Users";
-                Toast.makeText(loginActivity.this, tableName, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        //click sur le lien se Souvenir
+        //mais je lai mis en commentaire car lorsque j'ai avancer dans le developpement de l'application, un crash de l'application survient
         rememberChck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            //Utilisation de shared preferences qui permet aux activités et aux applications de conserver leurs préférences
+            //sous la forme de paires de valeurs clés qui persistera même lorsque l'utilisateur fermera l'application
 
             /*if (rememberChck.isChecked()){
                 SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
@@ -90,22 +86,21 @@ public class loginActivity extends AppCompatActivity {
                 Toast.makeText(loginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
             }*/
         });
-
-
     }
 
     private void initRemember() {
+        Users users = new Users();
         SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = prefs.getString("remember", "");
         if (checkbox.equals("true")){
-            sendUserToHome();
+            sendUserToHome(users);
         }
         else if (checkbox.equals("false")){
             Toast.makeText(this, "Connectez vous", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Phase de Connexion
+    //validation des données entrées
     private void authentification(){
         final String email = inputEmail.getText().toString().trim();
         final String password = inputPassword.getText().toString().trim();
@@ -119,29 +114,29 @@ public class loginActivity extends AppCompatActivity {
             inputPassword.requestFocus();
         }
         else{
+
             loadingBarLogin();
 
             if (adminLink.getVisibility() == View.VISIBLE){
+                //authentification en tant que User
                 signInUser(email, password);
             }
             else if(notAdminLink.getVisibility() == View.VISIBLE){
+                //authentification en tant que Admin
                 signInAdmin(email, password);
             }
         }
     }
 
+    ///// PHASE CONNEXION User
     private void signInUser(String mail, String pwd){
 
         Users user = new Users(mail, pwd);
 
-        boolean checkUser = user.loginUser();
+        boolean checkUser = user.loginUser(); //renvoit boolean si les données correspond aux infos de la BDD
         if (checkUser){
             loadingBar.dismiss();
-
-            Intent homeIntent = new Intent(loginActivity.this, HomeActivity.class);
-            homeIntent.putExtra("email", user.getEmail());
-            startActivity(homeIntent);
-
+            sendUserToHome(user);
             Toast.makeText(loginActivity.this, getString(R.string.logged_User_msg), Toast.LENGTH_SHORT).show();
         }
         else{
@@ -150,14 +145,13 @@ public class loginActivity extends AppCompatActivity {
         }
     }
 
+    ///// PHASE CONNEXION Admin
     private void signInAdmin(String mail, String pwd) {
 
         Admins admin = new Admins(mail, pwd);
         boolean checkAdmin = admin.loginAdmin(); //= db.checkAdmin(mail, pwd);
         if (checkAdmin){
-            //sendUserToHome();
             loadingBar.dismiss();
-            //sendAdminToAdminCategory();
             sendAdminToListProduct();
             Toast.makeText(loginActivity.this, getString(R.string.logged_Admin_msg), Toast.LENGTH_SHORT).show();
         }
@@ -176,18 +170,13 @@ public class loginActivity extends AppCompatActivity {
     }
 
     //direction vers Home Activity
-    private void sendUserToHome() {
+    private void sendUserToHome(Users user) {
         Intent homeIntent = new Intent(loginActivity.this, HomeActivity.class);
-        //homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);//permet de refresh lactivity
+        homeIntent.putExtra("email", user.getEmail()); //transfert de l'email du user vers le home Activity
         startActivity(homeIntent);
     }
 
-    //direction vers AdminCategory Activity
-    private void sendAdminToAdminCategory() {
-        Intent mainIntent = new Intent(loginActivity.this, CategoryAdminActivity.class);
-        startActivity(mainIntent);
-    }
-
+    //direction vers List Product Admin Activity
     private void sendAdminToListProduct() {
         Intent mainIntent = new Intent(loginActivity.this, ListProductAdminActivity.class);
         startActivity(mainIntent);
@@ -195,17 +184,14 @@ public class loginActivity extends AppCompatActivity {
 
     //Initialiastion des champs
     private void initiatizeField() {
-        //db = new DatabaseHelper(this);
 
         loginBtn = (Button) findViewById(R.id.login_btn);
         inputEmail = (EditText) findViewById(R.id.login_email_input);
         inputPassword = (EditText) findViewById(R.id.login_password_input);
-        loadingBar = new ProgressDialog(this);
         rememberChck = (CheckBox) findViewById(R.id.remember_me_checkbox);
         adminLink = (TextView) findViewById(R.id.admin_login_link);
         notAdminLink = (TextView) findViewById(R.id.not_admin_login_link);
+        loadingBar = new ProgressDialog(this);
 
-        inputEmail.setText("you@mail.com");
-        inputPassword.setText("banana");
     }
 }

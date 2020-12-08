@@ -28,6 +28,7 @@ public class Products {
         this.imagePath = imagePath;
     }
 
+    //getter et setter
 
     public String getIdProduct() {
         return idProduct;
@@ -93,21 +94,25 @@ public class Products {
         this.category = category;
     }
 
+    //methode faisant appel a la requete d'insertion de Product dans la BDD
     public boolean insertProduct(){
         boolean isAdded = Myapplication.getYdDatabaseAdapter().insertProduct(name, category, description, price, dateTime, imagePath);
         return isAdded;
     }
 
+    //methode faisant appel a la requete de recuperation de tous les données du produit
     public Cursor getDataProduct(){
         Cursor cursor = Myapplication.getYdDatabaseAdapter().getDataOfProduct(idProduct);
         return cursor;
     }
 
+    //methode faisant appel a la requete de suppression d'un produit
     public Integer deleteSingleProduct(){
         Integer row = Myapplication.getYdDatabaseAdapter().deleteSingleProduct(idProduct);
         return row;
     }
 
+    //methode faisant appel a la requete de suppression de tous les produit
     public Integer deleteAllProduct(){
         Integer rowDeleted = Myapplication.getYdDatabaseAdapter().deleteAllProduct();
         return rowDeleted;

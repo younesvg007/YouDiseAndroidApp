@@ -24,121 +24,94 @@ public class CategoryAdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_admin);
 
+        //initialisation des widgets avec la partie logique
         initViews();
 
-        getBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        //retour
+        getBack.setOnClickListener(v -> finish());
+
+        //cliquer sur la categories des smartphones
+        mobiles.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Smartphones");
+            startActivity(intent);
         });
 
-        mobiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Smartphones");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des montres
+        watches.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Montres");
+            startActivity(intent);
         });
 
-        watches.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Montres");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des pc
+        laptops.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "PC portable");
+            startActivity(intent);
         });
 
-        laptops.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "PC portable");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des casques/ecouteurs
+        headphones.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Casques - Ecouteurs");
+            startActivity(intent);
         });
 
-        headphones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Casques - Ecouteurs");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des manteaux
+        sweathers.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Manteaux");
+            startActivity(intent);
         });
 
-        sweathers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Manteaux");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des vetements pour femmes
+        femaleDress.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Vetements Feminins");
+            startActivity(intent);
         });
 
-        femaleDress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Vetements Feminins");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des vetement sport
+        sport.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Training");
+            startActivity(intent);
         });
 
-        sport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Training");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des tshirt
+        tshirts.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "T-shirts");
+            startActivity(intent);
         });
 
-        tshirts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "T-shirts");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des chaussures
+        shoes.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Chaussures");
+            startActivity(intent);
         });
 
-        shoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Chaussures");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des chapeaux
+        hats.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Chapeaux - Casquette");
+            startActivity(intent);
         });
 
-        hats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Chapeaux - Casquette");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des sacs
+        pursesBag.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Sacs à mains");
+            startActivity(intent);
         });
 
-        pursesBag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Sacs à mains");
-                startActivity(intent);
-            }
-        });
-
-        glasses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
-                intent.putExtra("category", "Lunettes");
-                startActivity(intent);
-            }
+        //cliquer sur la categories des lunettes
+        glasses.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryAdminActivity.this, AddProductActivity.class);
+            intent.putExtra("category", "Lunettes");
+            startActivity(intent);
         });
     }
 

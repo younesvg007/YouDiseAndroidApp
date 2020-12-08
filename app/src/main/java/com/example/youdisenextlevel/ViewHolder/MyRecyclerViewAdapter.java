@@ -25,6 +25,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     private static String LOG_TAG = "MyRecyclerViewAdapter";
     private ArrayList<Products> mDataset;
     private static MyClickListener myClickListener;
+
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
@@ -32,8 +33,10 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView namePro, categoryPro, descPro, pricePro, datePro;
         ImageView imagePro;
 
+        // liason tous les widegts de l'interface utilisateur(xml) avec la partie logique de java
         public DataObjectHolder(View itemView) {
             super(itemView);
+
             namePro = (TextView) itemView.findViewById(R.id.name_product_item);
             categoryPro = (TextView) itemView.findViewById(R.id.category_product_item);
             descPro = (TextView) itemView.findViewById(R.id.description_product_item);
@@ -67,6 +70,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
+        // afficher les données sur le cardView
         holder.namePro.setText(mDataset.get(position).getName());
 
         String category = "(" + mDataset.get(position).getCategory() + ").";
@@ -80,6 +84,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         String dateTime = "Publié le " + mDataset.get(position).getDateTime();
         holder.datePro.setText(dateTime);
 
+        //recup image de Firebase Storage
         String image = mDataset.get(position).getImagePath();
         ImageManage.getImage(image, holder.imagePro);
 
@@ -90,10 +95,13 @@ public class MyRecyclerViewAdapter extends RecyclerView
         notifyItemInserted(index);
     }
 
+    //supprime un element du recycler View
     public void deleteItem(int index) {
         mDataset.remove(index);
         notifyItemRemoved(index);
     }
+
+    //recup le nombre total de element du recylcer view
     @Override
     public int getItemCount() {
         return mDataset.size();

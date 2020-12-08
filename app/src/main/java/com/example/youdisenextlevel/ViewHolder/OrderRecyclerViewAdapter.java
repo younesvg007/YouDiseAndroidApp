@@ -23,12 +23,14 @@ public class OrderRecyclerViewAdapter extends RecyclerView
     private static String LOG_TAG = "OrderRecyclerViewAdapter";
     private ArrayList<Orders> mDataset;
     private static MyClickListener myClickListener;
+
     public static class DataHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
 
         TextView idOrder, adressOrder, countryOrder, cardBankOrder, totalAmountOrder, dateTimeOrder;
 
+        // liason tous les widegts de l'interface utilisateur(xml) avec la partie logique de java
         public DataHolder(View itemView) {
             super(itemView);
             idOrder = (TextView) itemView.findViewById(R.id.order_id);
@@ -66,6 +68,7 @@ public class OrderRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataHolder holder, int position) {
+        // afficher les données sur le cardView
         String nCommande = "Commande n° " + mDataset.get(position).getIdOrder();
         holder.idOrder.setText(nCommande);
         holder.adressOrder.setText(mDataset.get(position).getAdress());
@@ -83,11 +86,13 @@ public class OrderRecyclerViewAdapter extends RecyclerView
         notifyItemInserted(index);
     }
 
+    //supprime un element du recycler View
     public void deleteItem(int index) {
         mDataset.remove(index);
         notifyItemRemoved(index);
     }
 
+    //recup le nombre total de element du recylcer view
     @Override
     public int getItemCount() {
         return mDataset.size();

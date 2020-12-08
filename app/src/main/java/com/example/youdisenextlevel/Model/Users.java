@@ -28,6 +28,8 @@ public class Users{
         this.password = password;
     }
 
+    //getters et setters
+
     public int getIdUser() {
         return idUser;
     }
@@ -72,21 +74,25 @@ public class Users{
 
     public void setPhoneNum(String phoneNum) { this.phoneNum = phoneNum; }
 
+    //methode faisant appel a la requete d'insertion User dans la BDD
     public boolean insertUser(){
         boolean isAdded = Myapplication.getYdDatabaseAdapter().insertUser(username, email, password,  phoneNum, country);
         return isAdded;
     }
 
+    //methode faisant appel a la requete de authentification de User
     public boolean loginUser(){
         boolean checkUser = Myapplication.getYdDatabaseAdapter().checkUser(email, password);
         return checkUser;
     }
 
+    //methode faisant appel a la requete de verification si le mail User existe deja dans la table
     public boolean checkMailUser(){
         boolean isExist = Myapplication.getYdDatabaseAdapter().checkMailUser(email);
         return isExist;
     }
 
+    //methode faisant appel a la requete de recuperation de tous les données du user
     public Cursor getDataUser(){
         Cursor cursor = Myapplication.getYdDatabaseAdapter().getDataOfUser(email);
         return cursor;

@@ -38,29 +38,41 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //recuperation de la donnée (adresse email) de l'utilisateur
         email = getIntent().getExtras().get("email").toString();
 
-        initFields();
+        //Mise en place du recycler View
+        initRecyclerView();
+    }
 
+    private void initRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter(getDataSet());
+        mAdapter = new MyRecyclerViewAdapter(getDataSet()); //recoit l'arraylist produit
         mRecyclerView.setAdapter(mAdapter);
-
     }
 
     private ArrayList<Products> getDataSet() {
 
+        //declaration Arraylist pour stocker tous les produits qui viennent de la BDD
         ArrayList results = new ArrayList<Products>();
+
+        //declaration Arraylist pour stocker les id du produit
         idList = new ArrayList<>();
 
+        // recoit curseur qui permet de recup les produits de la BDD
         Cursor cursor = Myapplication.getYdDatabaseAdapter().getAllProduct();
+
+        //c'est l'index pour chaque produit l'arraylist car on peut pas utiliser l'id du produit parce que il commence a 1.
         int index = 0;
-        // looping through all rows and adding to list
+
+        // si curseur de la table PRoduit commence par la premiere ligne
         if (cursor.moveToFirst()) {
+            //parcours de toutes les lignes de la table Produits
             do {
+                // Chaque variable recoit une donnee de la table Produit
                 int id = cursor.getInt(cursor.getColumnIndex(YouDise.PRODUCTS_COL_ID));
                 String name = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_NAME));
                 String category = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_CATEGORY));
@@ -68,32 +80,25 @@ public class HomeActivity extends AppCompatActivity {
                 int price = cursor.getInt(cursor.getColumnIndex(YouDise.PRODUCTS_COL_PRICE));
                 String dateTime = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_DATETIME));
                 String image = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_IMAGE));
-                //Toast.makeText(this, image, Toast.LENGTH_SHORT).show();
 
-                //products = new Products(id + ": " + name, desc, price, image);
                 products = new Products(id + ": " + name, category, desc, price, dateTime, image);
                 results.add(index, products);
-                //products.setId(id);
 
                 String idProduct = String.valueOf(id);
                 idList.add(idProduct);
-                //Toast.makeText(this, products.getId()+"", Toast.LENGTH_SHORT).show();
                 ++index;
 
             } while (cursor.moveToNext());
         }
 
-        //pour afficher produit les plus recent d'abord
+        //pour afficher les produit les plus recent d'abord
         Collections.reverse(results);
+        //vu que cest les plus recent dabord afficher, on inverse les id aussi pour eviter la confusion du systeme lors du click sur chaque item
         Collections.reverse(idList);
-
         return results;
     }
 
-    private void initFields() {
-        //logoutBtn = (Button) findViewById(R.id.logout_btn);
-    }
-
+    //permet de desactiver le "Remember me"
     private void cancelRemember() {
         SharedPreferences prefs = getSharedPreferences("checkbox", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -108,20 +113,22 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(profileIntent);
     }
 
+    //lorsqu'on clique sur un item produit
     @Override
     protected void onResume() {
         super.onResume();
         ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener((position, v) -> {
 
+            //transfert id du produit et email du user vers Product Detail Activity
             Intent profileIntent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
             String idProduct = idList.get(position);
             profileIntent.putExtra("id", idProduct);
             profileIntent.putExtra("email", email);
             startActivity(profileIntent);
-            //Toast.makeText(HomeActivity.this, idList.get(position)+"", Toast.LENGTH_SHORT).show();
         });
     }
 
+    //permet de lier le widget Option menu avec la partie logique (java)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -129,6 +136,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //presente les different option. Ici il ya que le profil
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.profil_item){

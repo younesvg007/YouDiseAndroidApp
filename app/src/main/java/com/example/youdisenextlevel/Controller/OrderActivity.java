@@ -27,7 +27,7 @@ public class OrderActivity extends AppCompatActivity {
     private String mail, totalAmount;
     private TextView cancelOrder, adressOrder, countryOrder, bankCardOrder;
     private Button orderBtn;
-    private Users user = new Users();;
+    private Users user = new Users();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +36,14 @@ public class OrderActivity extends AppCompatActivity {
 
         mail = getIntent().getExtras().get("mail").toString();
         totalAmount = getIntent().getExtras().get("totalprice").toString();
-        Toast.makeText(this, totalAmount, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, mail, Toast.LENGTH_SHORT).show();
+
         user.setEmail(mail);
 
         initField();
 
-        cancelOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        cancelOrder.setOnClickListener(v -> finish());
 
-        orderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateOrder();
-            }
-        });
+        orderBtn.setOnClickListener(v -> validateOrder());
     }
 
     private void validateOrder() {
@@ -83,7 +72,8 @@ public class OrderActivity extends AppCompatActivity {
             bankCardOrder.requestFocus();
         }
         else{
-            //Toast.makeText(this, user.getCountry(), Toast.LENGTH_SHORT).show();
+
+            //methode permetant d'inserer les donnees de la commande dans la BDD
             addOrder(adress, country, bankCard);
         }
     }
@@ -95,23 +85,18 @@ public class OrderActivity extends AppCompatActivity {
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String dateTime =  currentDate.format(calendar.getTime());
 
-        Toast.makeText(this, user.getUsername(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, mail, Toast.LENGTH_SHORT).show();
-
         try {
-            //Orders order = new Orders(user.getUsername(), user.getEmail(), adress, country, bankCard, totalAmount, dateTime, user.getIdUser());
-
+            // appel a la requete qui va inserer une commandde dans la Table ORDERS
             boolean isAdded = Myapplication.getYdDatabaseAdapter().insertOrder(user.getUsername(), user.getEmail(), adress, country, bankCard, totalAmount, dateTime, user.getIdUser());
             Toast.makeText(this, isAdded+"", Toast.LENGTH_SHORT).show();
             if (isAdded){
+                Toast.makeText(this, getString(R.string.order_sent), Toast.LENGTH_SHORT).show();
                 sendNotification();
-                Toast.makeText(this, "Commande Envoyé", Toast.LENGTH_SHORT).show();
                 finish();
             }
             else{
                 Toast.makeText(this, getString(R.string.error_addproduct), Toast.LENGTH_SHORT).show();
             }
-
         }
         catch(Exception e){
             String msgError = e.getMessage();
@@ -139,16 +124,15 @@ public class OrderActivity extends AppCompatActivity {
             Cursor cursor = user.getDataUser();
             if (cursor.getCount() != 0){
                 while (cursor.moveToNext()){
-                    //ne pas utiliser getter et setter sinon app crash
+
                     int idUser = cursor.getInt(cursor.getColumnIndex(YouDise.USERS_COL_ID));
                     String name = cursor.getString(cursor.getColumnIndex(YouDise.USERS_COL_USERNAME));
                     String country = cursor.getString(cursor.getColumnIndex(YouDise.USERS_COL_COUNTRY));
-                    //idUser = String.valueOf(idUserI);
 
                     user.setIdUser(idUser);
                     user.setUsername(name);
                     user.setCountry(country);
-                    //Toast.makeText(this, idUserS, Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
@@ -165,8 +149,5 @@ public class OrderActivity extends AppCompatActivity {
         bankCardOrder = (TextView) findViewById(R.id.bank_card_order);
         orderBtn = (Button) findViewById(R.id.valid_order_btn);
 
-        adressOrder.setText("rue de la loi 15, Bruxelles");
-        countryOrder.setText("Belgique");
-        bankCardOrder.setText("1234432156788765");
     }
 }

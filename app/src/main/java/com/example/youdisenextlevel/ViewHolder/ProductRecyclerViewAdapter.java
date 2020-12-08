@@ -22,6 +22,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView
     private static String LOG_TAG = "ProductRecyclerViewAdapter";
     private ArrayList<Products> mDataset;
     private static MyClickListener myClickListener;
+
     public static class DataClassHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
@@ -29,6 +30,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView
         TextView nameProAdmin, categoryProAdmin, descProAdmin, priceProAdmin, dateProAdmin;
         ImageView imageProAdmin;
 
+        // liason tous les widegts de l'interface utilisateur(xml) avec la partie logique de java
         public DataClassHolder(View itemView) {
             super(itemView);
             nameProAdmin = (TextView) itemView.findViewById(R.id.name_product_admin_item);
@@ -64,6 +66,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView
     }
     @Override
     public void onBindViewHolder(DataClassHolder holder, int position) {
+        // afficher les données sur le cardView
         holder.nameProAdmin.setText(mDataset.get(position).getName());
 
         String category = "(" + mDataset.get(position).getCategory() + ").";
@@ -86,10 +89,13 @@ public class ProductRecyclerViewAdapter extends RecyclerView
         notifyItemInserted(index);
     }
 
+    //supprime un element du recycler View
     public void deleteItem(int index) {
         mDataset.remove(index);
         notifyItemRemoved(index);
     }
+
+    //recup le nombre total de element du recylcer view
     @Override
     public int getItemCount() {
         return mDataset.size();

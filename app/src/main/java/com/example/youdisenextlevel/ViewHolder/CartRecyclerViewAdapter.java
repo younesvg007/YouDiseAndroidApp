@@ -24,6 +24,7 @@ public class CartRecyclerViewAdapter  extends RecyclerView
     private static String LOG_TAG = "MyRecyclerViewAdapter";
     private ArrayList<Carts> mDataset;
     private static MyClickListener myClickListener;
+
     public static class DataHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
@@ -31,6 +32,7 @@ public class CartRecyclerViewAdapter  extends RecyclerView
         TextView nameCart, categoryCart, quantityCart, priceCart;
         ImageView imageCart;
 
+        // liason tous les widegts de l'interface utilisateur(xml) avec la partie logique de java
         public DataHolder(View itemView) {
             super(itemView);
             nameCart = (TextView) itemView.findViewById(R.id.name_cart_item);
@@ -67,6 +69,7 @@ public class CartRecyclerViewAdapter  extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataHolder holder, int position) {
+        // afficher les données sur le cardView
         holder.nameCart.setText(mDataset.get(position).getNameC());
         holder.categoryCart.setText(mDataset.get(position).getCategoryC());
         String price = mDataset.get(position).getPrice() + " €";
@@ -74,9 +77,9 @@ public class CartRecyclerViewAdapter  extends RecyclerView
         String quantity = "Quantité: " + mDataset.get(position).getQuantity();
         holder.quantityCart.setText(quantity);
 
+        //recup image de Firebase Storage
         String image = mDataset.get(position).getImage();
         ImageManage.getImage(image, holder.imageCart);
-        //holder.nameCart.setText(mDataset.get(position).getNameP());
     }
 
     public void addItem(Carts panier, int index) {
@@ -84,11 +87,13 @@ public class CartRecyclerViewAdapter  extends RecyclerView
         notifyItemInserted(index);
     }
 
+    //supprime un element du recycler View
     public void deleteItem(int index) {
         mDataset.remove(index);
         notifyItemRemoved(index);
     }
 
+    //recup le nombre total de element du recylcer view
     @Override
     public int getItemCount() {
         return mDataset.size();

@@ -30,6 +30,8 @@ public class Orders {
         this.totalAmount = totalAmount;
     }
 
+    //getter et setter
+
     public String getName() {
         return name;
     }
@@ -93,10 +95,5 @@ public class Orders {
     public void setAdress(String adress) {
         this.adress = adress;
     }
-
-    /*public boolean insertOrder(){
-        boolean isAdded = Myapplication.getYdDatabaseAdapter().insertOrder(name, email, adress, country, bankCard, totalAmount, dateTime, idUser);
-        return isAdded;
-    }*/
 
 }

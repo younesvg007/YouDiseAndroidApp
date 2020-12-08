@@ -28,18 +28,20 @@ public class Myapplication extends Application {
 
         ydDatabaseAdapter = new YDDatabaseAdapter(this);
 
-        createNotificationChannels();
+        createNotificationField();
     }
 
-
+    //permet de faire appel avec la base de donné
     public static YDDatabaseAdapter getYdDatabaseAdapter() {
         return ydDatabaseAdapter;
     }
+
 
     public static boolean isFirstLaunch() {
         return firstLaunch;
     }
 
+    //lancer l'application
     public static void setFirstLaunch() {
         sharedPreferences
                 .edit()
@@ -47,7 +49,8 @@ public class Myapplication extends Application {
                 .apply();
     }
 
-    private void createNotificationChannels(){
+    //methode d'intialiser les notifications
+    private void createNotificationField(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channelNotif = new NotificationChannel(

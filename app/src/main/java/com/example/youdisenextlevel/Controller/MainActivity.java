@@ -21,15 +21,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //lier button
-        InitializeFields();
+        // methode qui permet de lier tous les widegts de l'interface utilisateur(xml) avec la programation de java
+        initFields();
 
-        //creer un evenement (click sur button)
+        //creation dun evenement (click sur button "se connecter")
         loginButton.setOnClickListener(v -> {
             //envoi lutilisateur vers le login activity
             sendUserToLogin();
         });
 
+        //creation dun evenement (click sur button "Inscription")
         registerButton.setOnClickListener(v -> {
             //envoi lutilisateur vers le register activity
             sendUserToRegister();
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void InitializeFields() {
+    private void initFields() {
         loginButton = (Button) findViewById(R.id.login_main_btn);
         registerButton = (Button) findViewById(R.id.register_main_btn);
     }

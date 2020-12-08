@@ -22,6 +22,8 @@ public class Carts {
         this.idProduct = idProduct;
     }
 
+    //getters et setters
+
     public String getNameC() {
         return nameC;
     }
@@ -86,11 +88,13 @@ public class Carts {
         this.idUser = idUser;
     }
 
+    //methode faisant appel a la requete d'insertion de Order dans la BDD
     public boolean insertCart(){
         boolean isAdded = Myapplication.getYdDatabaseAdapter().insertCart(nameC, categoryC, image, quantity, price, idProduct, idUser);
         return isAdded;
     }
 
+    //methode faisant appel a la requete de verification si un produit existe dans le panier de luser
     public boolean checkProductUser(){
         String idUserS = String.valueOf(idUser);
         String idProductS = String.valueOf(idProduct);
@@ -98,11 +102,13 @@ public class Carts {
         return isExist;
     }
 
+    //methode faisant appel a la requete de suppression d'un produit dans le panier de luser
     public Integer deleteSingleCart(){
         Integer row = Myapplication.getYdDatabaseAdapter().deleteSingleCart(idCart);
         return row;
     }
 
+    //methode faisant appel a la requete de suppression tout le panier de luser
     public Integer deleteAllCartOfUser(){
         String idUserDelete = String.valueOf(idUser);
         Integer rowDeleted = Myapplication.getYdDatabaseAdapter().deleteAllCartOfUser(idUserDelete);

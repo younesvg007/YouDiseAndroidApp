@@ -46,32 +46,27 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         idProduct = getIntent().getExtras().get("id").toString();
         email = getIntent().getExtras().get("email").toString();
-        //Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
 
         getInfosProduct();
-        //Toast.makeText(this, nameP, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, quantityBtn.getNumber(), Toast.LENGTH_SHORT).show();
-
         getInfosUser();
-        closeProduct.setOnClickListener(v -> finish());
 
+        closeProduct.setOnClickListener(v -> finish());
         addCart.setOnClickListener(v -> addToCart());
     }
 
+    //permet d'ajouter dans la Table Panier
     private void addToCart() {
         try {
             priceI = Integer.parseInt(price);
             idProductInt = Integer.parseInt(idProduct);
             quantity = Integer.parseInt(quantityBtn.getNumber());
             Carts cart = new Carts(nameC, categoryC, imageKey, quantity, priceI, idProductInt, idUser);
+
             boolean isExist = cart.checkProductUser();
-            //Toast.makeText(this, isExist+"", Toast.LENGTH_SHORT).show();
             if (!isExist){
                 boolean isAdded = cart.insertCart();
                 if (isAdded){
                     sendNotification();
-                    //Toast.makeText(this, getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(this, quantityBtn.getNumber(), Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else{
@@ -81,29 +76,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
             else{
                 Toast.makeText(this, getString(R.string.already_exist_in_cart), Toast.LENGTH_SHORT).show();
             }
-
         }
         catch(Exception e){
             String msgError = e.getMessage();
             Toast.makeText(this, msgError, Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    //methode permettant d'envoyer une Notification
     private void sendNotification() {
-        String msg = "Un nouveau produit à été ajouté dans le panier";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ProductDetailsActivity.this, Myapplication.ID_CHANNEL)
-                .setSmallIcon(R.drawable.cart)
-                .setContentTitle("Succès")
-                .setContentText(msg)
-                .setAutoCancel(true);
 
+        String msg = "Un nouveau produit à été ajouté dans le panier";
+        //creation d'un Notif
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ProductDetailsActivity.this, Myapplication.ID_CHANNEL)
+                .setSmallIcon(R.drawable.cart) //logo
+                .setContentTitle("Succès") //titre
+                .setContentText(msg) //message
+                .setAutoCancel(true); // activation annulation auto
+
+        //Classe NotificationManager détermine comment interrompre l'utilisateur pour toute notification appartenant à ce canal
         NotificationManager notificationManager = (NotificationManager)getSystemService(
                 Context.NOTIFICATION_SERVICE
         );
         notificationManager.notify(1, builder.build());
     }
 
+    //permet de recuperer le Id du user afin de l'inserer dans la table panier afin de reconnaitre ses produits
     private void getInfosUser() {
         try {
             user = new Users();
@@ -122,6 +120,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
+    //permet de recuperer les données du produit
     private void getInfosProduct() {
         try {
             product = new Products();
@@ -136,8 +135,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     String describeP = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_DESCRIPTION));
                     price = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_PRICE));
                     String priceFull = price + " €";
+
                     imageKey = cursor.getString(cursor.getColumnIndex(YouDise.PRODUCTS_COL_IMAGE));
-                    ImageManage.getImage(imageKey, imageProductDetail);
+                    ImageManage.getImage(imageKey, imageProductDetail); //recup l'image dans Firebase storage à l'aide de l'identifiant(imagekey)
 
                     nameProductDetail.setText(nameFull);
                     describeProductDetail.setText(describeP);

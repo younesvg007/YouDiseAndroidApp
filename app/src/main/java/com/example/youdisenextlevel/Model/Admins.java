@@ -22,16 +22,19 @@ public class Admins{
         this.password = password;
     }
 
+    //methode faisant appel a la requete d'insertion Admin dans la BDD
     public boolean insertAdmin(){
         boolean isAdded = Myapplication.getYdDatabaseAdapter().insertAdmin(fullname, email, password);
         return isAdded;
     }
 
+    //methode faisant appel a la requete de verification si le mail Admin existe deja dans la table
     public boolean checkMailAdmin(){
         boolean isExist = Myapplication.getYdDatabaseAdapter().checkMailAdmin(email);
         return isExist;
     }
 
+    //methode faisant appel a la requete de authentification de Admin
     public boolean loginAdmin(){
         boolean checkAdmin = Myapplication.getYdDatabaseAdapter().checkAdmin(email, password);
         return checkAdmin;

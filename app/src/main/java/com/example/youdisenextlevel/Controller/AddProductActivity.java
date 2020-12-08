@@ -28,7 +28,7 @@ public class AddProductActivity extends AppCompatActivity {
     private Button addNewProductButton;
 
     private static final int galleryPick = 1;
-    private Uri imageUri;
+    private Uri imageUri; // variable qui va contenir l'image an tant que URI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +40,13 @@ public class AddProductActivity extends AppCompatActivity {
 
         initView();
 
-        inputProductImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
+        inputProductImage.setOnClickListener(v -> openGallery());
 
-        addNewProductButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validation();
-            }
-        });
+        addNewProductButton.setOnClickListener(v -> validation());
 
     }
 
+    //validation des données entré par l'Admin
     private void validation() {
         nameProduct = inputProductName.getText().toString().trim();
         descriptionProduct = inputProductDescription.getText().toString().trim();
@@ -77,6 +68,7 @@ public class AddProductActivity extends AppCompatActivity {
             inputProductPrice.requestFocus();
         }
         else{
+            //stocker le produit dans la BDD
             storeProduct();
         }
     }
@@ -87,20 +79,23 @@ public class AddProductActivity extends AppCompatActivity {
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         saveCurrentDate =  currentDate.format(calendar.getTime());
 
+        //ce format de date servira d'identifiant pour l'image du produit
         SimpleDateFormat imageDate = new SimpleDateFormat("yyyyMMddHHmmss");
         imageUrl =  imageDate.format(calendar.getTime())+ "." + ImageManage.extention(getContentResolver(),imageUri);
 
         int price = Integer.parseInt(priceProduct);
         Products products = new Products(nameProduct, categoryName, descriptionProduct, price, saveCurrentDate, imageUrl);
-        boolean isAdded = products.insertProduct();
+
+        boolean isAdded = products.insertProduct(); //insertion du produit dans la Table Products
         if (isAdded){
+
+            //insertion de l'image dans Firebase Storage
             ImageManage.addImage(
                     imageUri,
                     imageUrl,
                     taskSnapshot -> {System.out.println("image insert ok"); });
             Toast.makeText(this, getString(R.string.product_added), Toast.LENGTH_SHORT).show();
             finish();
-            //sendAdminToMain();
         }
         else{
             Toast.makeText(this, getString(R.string.error_addproduct), Toast.LENGTH_SHORT).show();
@@ -114,11 +109,9 @@ public class AddProductActivity extends AppCompatActivity {
         inputProductImage = (ImageView) findViewById(R.id.select_product_image2);
         addNewProductButton = (Button) findViewById(R.id.add_new_product_btn2);
 
-        inputProductName.setText("Yamaha");
-        inputProductDescription.setText("joli");
-        inputProductPrice.setText("10000");
     }
 
+    //methose permetant douvrir la gallerie du telephone et de prendre une image
     private void openGallery() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -126,6 +119,7 @@ public class AddProductActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, galleryPick);
     }
 
+    //methode permetant 'dafficher l'image choisi dans l application
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -136,9 +130,4 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void sendAdminToMain() {
-        Intent mainIntent = new Intent(AddProductActivity.this, loginActivity.class);
-        startActivity(mainIntent);
-        Toast.makeText(this, getString(R.string.logout_User_msg), Toast.LENGTH_SHORT).show();
-    }
 }

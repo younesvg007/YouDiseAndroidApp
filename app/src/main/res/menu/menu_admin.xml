@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_product_item"
+        android:title="Ajouter un Produit"
+        />
+    <item
+        android:id="@+id/erase_list_product_item"
+        android:title="Effacer la liste"
+        />
+    <item
+        android:id="@+id/logout_item"
+        android:title="Déconnexion"
+        />
+</menu>

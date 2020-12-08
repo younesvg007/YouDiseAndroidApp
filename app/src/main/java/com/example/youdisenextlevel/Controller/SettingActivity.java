@@ -33,21 +33,11 @@ public class SettingActivity extends AppCompatActivity {
         oldEmail = getIntent().getExtras().get("email").toString();
         Toast.makeText(this, oldEmail, Toast.LENGTH_SHORT).show();
 
-        closeSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        //clique sur annuler pour revenir au profil
+        closeSetting.setOnClickListener(v -> finish());
 
-            }
-        });
-
-        updateSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validationUser();
-            }
-        });
-
+        //clique sur Enregistrer pour mettre a jour
+        updateSetting.setOnClickListener(v -> validationUser());
     }
 
     private void initField() {
@@ -58,15 +48,13 @@ public class SettingActivity extends AppCompatActivity {
         passwordNew = (EditText) findViewById(R.id.password_profile_setting);
         loadingBar = new ProgressDialog(this);
 
-        nameNew.setText("nes");
-        emailNew.setText("nes@mail.com");
-        passwordNew.setText("banana");
     }
 
     boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    //validation des données entrées
     private void validationUser() {
         String name = nameNew.getText().toString().trim(); //trim() remove les espaces du debut et fin du string
         String newEmail = emailNew.getText().toString().trim();
@@ -102,6 +90,7 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 
+    //permet de mettre a jour les données du user dans La BDD
     private void updateUser(String name, String newEmail, String password) {
 
         try {
@@ -127,12 +116,4 @@ public class SettingActivity extends AppCompatActivity {
         loadingBar.show();
     }
 
-
-    private void sendUserToProfile() {
-        //loadingBar.dismiss();
-        //Intent profileIntent = new Intent(this, com.example.youdisenextlevel.Controller.ProfileActivity.class);
-        //profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //profileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //startActivity(profileIntent);
-    }
 }

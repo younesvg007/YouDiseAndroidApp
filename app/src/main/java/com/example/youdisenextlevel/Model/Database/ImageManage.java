@@ -15,6 +15,7 @@ public class ImageManage {
 
     private static StorageReference mStorageRef;
 
+    //methode permettant d'ajouter une image dans FirebaseStorage
     public static String addImage(Uri imageUri, String nameImage, OnSuccessListener<UploadTask.TaskSnapshot> onSuccessListenerCallback){
         mStorageRef = FirebaseStorage.getInstance().getReference("Product Images");
 
@@ -27,13 +28,14 @@ public class ImageManage {
         return nameImage;
     }
 
+    //methode permettant de donner l'extenwion .jpg avec l'identifiant de l'image
     public static String extention(ContentResolver ct, Uri imageUri){
         ContentResolver cr =  ct;
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(cr.getType(imageUri));
     }
 
-
+    //methode permettant de recup l'image de Firebase Storage
     public static void getImage(String nameImage, ImageView img){
         mStorageRef = FirebaseStorage.getInstance().getReference("Product Images");
         StorageReference ref = mStorageRef.child(nameImage);

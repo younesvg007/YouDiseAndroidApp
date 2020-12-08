@@ -45,12 +45,12 @@ public class ListProductAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_product_admin);
 
         initRecyclerView();
-        quantityProduct = getDataSet().size();
 
+        //affiche quantité total des produits existant
+        quantityProduct = getDataSet().size();
         productFull = "Total Produits : "+ quantityProduct;
         totalProduct.setText(productFull);
 
-        //Toast.makeText(this, , Toast.LENGTH_SHORT).show();
     }
 
     private void initRecyclerView() {
@@ -109,57 +109,57 @@ public class ListProductAdminActivity extends AppCompatActivity {
         Toast.makeText(this, getString(R.string.logout_User_msg), Toast.LENGTH_SHORT).show();
     }
 
+    //lorque on clique sur un item, un alert dialogue souvre pour confirmer la suppression du produit
     @Override
     protected void onResume() {
         super.onResume();
-        ((ProductRecyclerViewAdapter) mAdapter).setOnItemClickListener(new ProductRecyclerViewAdapter.MyClickListener(){
-            @Override
-            public void onItemClick(int position, View v) {
-                AlertDialog.Builder dialogDelete = new AlertDialog.Builder(ListProductAdminActivity.this);
-                dialogDelete.setTitle(getString(R.string.deletion_product));
-                dialogDelete.setMessage(getString(R.string.sure_to_delete));
-                dialogDelete.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Products product = new Products();
-                        String idProduct = idList.get(position);
-                        product.setIdProduct(idProduct);
-                        //Toast.makeText(ListProductAdminActivity.this, product.getIdProduct(), Toast.LENGTH_SHORT).show();
-                        try {
-                            Integer rowDeleted = product.deleteSingleProduct();
-                            if (rowDeleted > 0){
-                                Toast.makeText(ListProductAdminActivity.this, "Produit supprimer", Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(CartActivity.this, results.get(position).getPrice()+"", Toast.LENGTH_SHORT).show();
+        ((ProductRecyclerViewAdapter) mAdapter).setOnItemClickListener((position, v) -> {
 
-                                //cela supprimera un item va falloir rafraichir pour revenir a la page
-                                ((ProductRecyclerViewAdapter) mAdapter).deleteItem(position);
-                                --quantityProduct;
+            AlertDialog.Builder dialogDelete = new AlertDialog.Builder(ListProductAdminActivity.this);
+            dialogDelete.setTitle(getString(R.string.deletion_product));
+            dialogDelete.setMessage(getString(R.string.sure_to_delete));
 
-                                productFull = "Total Produits : "+ quantityProduct;
-                                totalProduct.setText(productFull);
-                            }
-                            else{
-                                Toast.makeText(ListProductAdminActivity.this, getString(R.string.refresh_activity), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch(Exception e){
-                            String msgError = e.getMessage();
-                            Toast.makeText(ListProductAdminActivity.this, msgError, Toast.LENGTH_SHORT).show();
-                        }
+            dialogDelete.setPositiveButton("Oui", (dialog, which) -> {
+
+                Products product = new Products();
+                String idProduct = idList.get(position);
+                product.setIdProduct(idProduct);
+                try {
+
+                    // appel a la requete qui va supprimer uniquement le produit cliqué
+                    Integer rowDeleted = product.deleteSingleProduct();
+                    if (rowDeleted > 0){
+                        Toast.makeText(ListProductAdminActivity.this, "Produit supprimer", Toast.LENGTH_SHORT).show();
+
+                        //cela supprimera un item va falloir rafraichir pour revenir a la page
+                        ((ProductRecyclerViewAdapter) mAdapter).deleteItem(position);
+
+                        //mise à jour du nombre de produit dispo
+                        --quantityProduct;
+                        productFull = "Total Produits : "+ quantityProduct;
+                        totalProduct.setText(productFull);
                     }
-                });
-
-                dialogDelete.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    else{
+                        Toast.makeText(ListProductAdminActivity.this, getString(R.string.refresh_activity), Toast.LENGTH_SHORT).show();
                     }
-                });
-                dialogDelete.show();
-            }
+                }
+                catch(Exception e){
+                    String msgError = e.getMessage();
+                    Toast.makeText(ListProductAdminActivity.this, msgError, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dialogDelete.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dialogDelete.show();
         });
     }
 
+    //permet de lier le widget Option menu_admin avec la partie logique (java)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -167,6 +167,7 @@ public class ListProductAdminActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //presente les different option : ajouter produit, vider la liste, deconnexion
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
@@ -184,6 +185,7 @@ public class ListProductAdminActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // clear la table Produit
     private void clearListProduct() {
 
         Products produit = new Products();

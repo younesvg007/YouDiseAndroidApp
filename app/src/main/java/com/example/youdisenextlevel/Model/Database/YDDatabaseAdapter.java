@@ -20,6 +20,8 @@ public class YDDatabaseAdapter {
         }
     }
 
+    /////Toutes les requetes
+
     //inserting USER in database
     public boolean insertUser(String name, String email, String password, String phone, String country) {
         ContentValues contentValues = new ContentValues();
@@ -33,19 +35,14 @@ public class YDDatabaseAdapter {
         return resultId != -1;
     }
 
-    //authentification
+    //authentification User
     public boolean checkUser(String email, String password){
         String[] columns = {
                 YouDise.USERS_COL_ID
         };
-        //sqLiteDB = this.getReadableDatabase();
-        // selection criteria
         String selection = YouDise.USERS_COL_EMAIL + " = ?" + " AND " + YouDise.USERS_COL_PASSWORD + " = ?";
 
-        // selection arguments
         String[] selectionArgs = {email, password};
-
-        // query user table with conditions
 
         Cursor cursor = sqLiteDB.query(YouDise.USERS_TABLE_NAME, //Table to query
                 columns,                    //columns to return
@@ -57,8 +54,6 @@ public class YDDatabaseAdapter {
 
         int cursorCount = cursor.getCount();
 
-        //cursor.close();
-        //sqLiteDB.close();
         if (cursorCount > 0) {
             return true;
         }
@@ -67,12 +62,10 @@ public class YDDatabaseAdapter {
         }
     }
 
-    //check if email exist
+    //check if email of User exist
     public boolean checkMailUser(String email){
-        //SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.USERS_TABLE_NAME+" WHERE "+YouDise.USERS_COL_EMAIL + "= ?", new String[]{email}); //=? condition
         if (cursor.getCount() > 0){
-            //cursor.moveToNext();
             return true;
         }
         else{
@@ -80,11 +73,13 @@ public class YDDatabaseAdapter {
         }
     }
 
+    //recup toutes les données de l'user
     public Cursor getDataOfUser(String email){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.USERS_TABLE_NAME+" WHERE "+YouDise.USERS_COL_EMAIL + "= ?", new String[]{email});
         return cursor;
     }
 
+    //Mise a jour des données de l'user
     public boolean updateUser(String name, String newEmail, String password, String oldEmail) {
 
         String sql = "UPDATE " + YouDise.USERS_TABLE_NAME + " SET " + YouDise.USERS_COL_USERNAME + " = ?, " + YouDise.USERS_COL_EMAIL + " = ?, " + YouDise.USERS_COL_PASSWORD + " = ? WHERE "+ YouDise.USERS_COL_EMAIL+" = ?";
@@ -104,18 +99,14 @@ public class YDDatabaseAdapter {
         return resultId != -1;
     }
 
+    //authentification Admin
     public boolean checkAdmin(String email, String password) {
         String[] columns = {
                 YouDise.ADMINS_COL_ID
         };
-        //sqLiteDB = this.getReadableDatabase();
-        // selection criteria
         String selection = YouDise.ADMINS_COL_EMAIL + " = ?" + " AND " + YouDise.ADMINS_COL_PASSWORD + " = ?";
 
-        // selection arguments
         String[] selectionArgs = {email, password};
-
-        // query user table with conditions
 
         Cursor cursor = sqLiteDB.query(YouDise.ADMINS_TABLE_NAME, //Table to query
                 columns,                    //columns to return
@@ -127,8 +118,6 @@ public class YDDatabaseAdapter {
 
         int cursorCount = cursor.getCount();
 
-        //cursor.close();
-        //sqLiteDB.close();
         if (cursorCount > 0) {
             return true;
         }
@@ -137,12 +126,10 @@ public class YDDatabaseAdapter {
         }
     }
 
-    //check if email exist
+    //check if email Admin exist
     public boolean checkMailAdmin(String email){
-        //SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.ADMINS_TABLE_NAME+" WHERE "+YouDise.ADMINS_COL_EMAIL + "= ?", new String[]{email}); //=? condition
         if (cursor.getCount() > 0){
-            //cursor.moveToNext();
             return true;
         }
         else{
@@ -164,21 +151,25 @@ public class YDDatabaseAdapter {
         return resultId != -1;
     }
 
+    //recup toutes les produit de la table
     public Cursor getAllProduct(){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+YouDise.PRODUCTS_TABLE_NAME, null);
         return cursor;
     }
 
+    //recup toutes les données du produit
     public Cursor getDataOfProduct(String id){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.PRODUCTS_TABLE_NAME+" WHERE "+YouDise.PRODUCTS_COL_ID + "= ?", new String[]{id});
         return cursor;
     }
 
+    //Supprime un produit de la table product
     public Integer deleteSingleProduct(String idProduct){
         Integer rowDeleted = sqLiteDB.delete(YouDise.PRODUCTS_TABLE_NAME, YouDise.PRODUCTS_COL_ID + "= ?",new String[]{idProduct});
         return rowDeleted;
     };
 
+    //recup toutes les produit de la table
     public Integer deleteAllProduct(){
         Integer rowDeleted = sqLiteDB.delete(YouDise.PRODUCTS_TABLE_NAME, null, null);
         return rowDeleted;
@@ -199,18 +190,14 @@ public class YDDatabaseAdapter {
         return resultId != -1;
     }
 
+    //check if a product of user exist in table Cart
     public boolean checkProductUser(String idProduct, String idUser){
         String[] columns = {
                 YouDise.CART_COL_ID
         };
-        //sqLiteDB = this.getReadableDatabase();
-        // selection criteria
         String selection = YouDise.CART_COL_IDPRODUCT + " = ?" + " AND " + YouDise.CART_COL_IDUSER + " = ?";
 
-        // selection arguments
         String[] selectionArgs = {idProduct, idUser};
-
-        // query user table with conditions
 
         Cursor cursor = sqLiteDB.query(YouDise.CART_TABLE_NAME, //Table to query
                 columns,                    //columns to return
@@ -222,8 +209,6 @@ public class YDDatabaseAdapter {
 
         int cursorCount = cursor.getCount();
 
-        //cursor.close();
-        //sqLiteDB.close();
         if (cursorCount > 0) {
             return true;
         }
@@ -232,21 +217,25 @@ public class YDDatabaseAdapter {
         }
     }
 
+    //recupere tous les paniers
     public Cursor getAllCart(){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+YouDise.CART_TABLE_NAME, null);
         return cursor;
     }
 
+    //recupere le panier de l'user
     public Cursor getCartOfUser(String idUser){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.CART_TABLE_NAME+" WHERE "+YouDise.CART_COL_IDUSER + "= ?", new String[]{idUser});
         return cursor;
     }
 
+    //Supprime un element de la table cart
     public Integer deleteSingleCart(String idCart){
         Integer rowDeleted = sqLiteDB.delete(YouDise.CART_TABLE_NAME, YouDise.CART_COL_ID + "= ?",new String[]{idCart});
         return rowDeleted;
     };
 
+    //supprime touus les paniers de l'user
     public Integer deleteAllCartOfUser(String idUser){
         Integer rowDeleted = sqLiteDB.delete(YouDise.CART_TABLE_NAME, YouDise.CART_COL_IDUSER + "= ?",new String[]{idUser});
         return rowDeleted;
@@ -269,6 +258,7 @@ public class YDDatabaseAdapter {
         return resultId != -1;
     }
 
+    //recup toutes les commande de l'user
     public Cursor getOrderOfUser(String idUser){
         Cursor cursor = sqLiteDB.rawQuery("SELECT * FROM "+ YouDise.CHECKOUT_TABLE_NAME+" WHERE "+YouDise.CHECKOUT_COL_IDUSER + "= ?", new String[]{idUser});
         return cursor;

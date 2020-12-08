@@ -9,10 +9,12 @@ import androidx.annotation.Nullable;
 
 public class YoudiseDataBaseHelper extends SQLiteOpenHelper {
 
+    //creation de la BASE DE DONNEES
     public YoudiseDataBaseHelper(Context context) {
         super(context, YouDise.DATABASE_NAME, null, YouDise.DATABASE_VERSION);
     }
 
+    //creation des TABLES
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i("MY_LOG", "Création de la base de données");

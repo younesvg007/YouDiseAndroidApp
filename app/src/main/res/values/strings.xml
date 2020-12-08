@@ -2,6 +2,7 @@
     <string name="app_name">youDiseNextLevel</string>
     <string name="app_slogan">Your Desire, Find it here.</string>
     <string name="app_login">Se Connecter</string>
+    <string name="app_login_admin">Connexion Admin</string>
     <string name="login">Connexion</string>
     <string name="register">Créer un compte</string>
     <string name="app_register">Inscription</string>
@@ -87,5 +88,6 @@
     <string name="adress">Adresse</string>
     <string name="card_bank">Carte de Crédit</string>
     <string name="to_order">Commander</string>
-    <string name="return_to_profile">Profil</string>
+    <string name="come_back">Retour</string>
+    <string name="order_sent">Commande Envoyé</string>
 </resources>
