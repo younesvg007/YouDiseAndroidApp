@@ -185,7 +185,8 @@ public class ListProductAdminActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // clear la table Produit /
+    // clear la table Produit Prety
+    //good
     private void clearListProduct() {
 
         Products produit = new Products();
